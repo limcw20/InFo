@@ -81,8 +81,8 @@ EXECUTE FUNCTION insert_user_settings_trigger_function();
 
 CREATE TABLE post (
 	post_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
--- 	FOREIGN KEY (user_id) UUID REFERENCES users(user_id) ON DELETE CASCADE,
--- 	FOREIGN KEY (chat_settings_id) UUID REFERENCES chat_settings(chat_settings_id) ON DELETE CASCADE,
+	user_id UUID,
+	chat_settings_id UUID,
 	post_title VARCHAR(30),
 	post_desc VARCHAR(1000),
 	post_img BYTEA,
@@ -93,6 +93,8 @@ CREATE TABLE post (
 
 CREATE TABLE chat_settings(
 	chat_settings_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+	user_id UUID,
+	chatroom_id UUID,
 	post_is_public BOOL DEFAULT FALSE,
 	post_is_locked BOOL DEFAULT FALSE
 );
@@ -100,17 +102,21 @@ CREATE TABLE chat_settings(
 -- Create response Table, reference to be inserted later on
 CREATE TABLE response(
 	response_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+	user_id UUID,
+	chatroom_id UUID,
 	response_desc VARCHAR(1000),
 	response_date DATE,
 	response_img BYTEA
 )
 
 -- Create chatroom Table
-CREATE TABLE chatroom(
-	chatroom_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-	response_id UUID REFERENCES response(response_id) ON DELETE CASCADE,
-	post_id UUID REFERENCES post(post_id) ON DELETE CASCADE
-)
+CREATE TABLE chatroom (
+    chatroom_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    response_id UUID,
+    post_id UUID,
+    FOREIGN KEY (response_id) REFERENCES response(response_id),
+    FOREIGN KEY (post_id) REFERENCES post(post_id) ON DELETE CASCADE
+);
 
 -- create chat_user Table
 
@@ -126,5 +132,27 @@ CREATE TABLE chat_user (
 -- create chat_list Table
 
 CREATE TABLE chat_list (
-	chat_list_id UUID PRIMARY KEY,
+	chat_list_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    response_id UUID,
+    post_id UUID,
+    FOREIGN KEY (response_id) REFERENCES response(response_id) ON DELETE CASCADE,
+    FOREIGN KEY (post_id) REFERENCES post(post_id) ON DELETE CASCADE
 )
+
+
+-- Create references
+ALTER TABLE post
+ADD CONSTRAINT user_id
+FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE;
+
+ALTER TABLE post
+ADD CONSTRAINT chat_settings_id
+FOREIGN KEY (chat_settings_id) REFERENCES chat_settings(chat_settings_id) ON DELETE CASCADE;
+
+ALTER TABLE chat_settings
+ADD CONSTRAINT user_id_chatroom_id
+FOREIGN KEY (user_id, chatroom_id) REFERENCES chat_user(user_id, chatroom_id) ON DELETE CASCADE;
+
+ALTER TABLE response
+ADD CONSTRAINT user_id_chatroom_id
+FOREIGN KEY (user_id, chatroom_id) REFERENCES chat_user(user_id, chatroom_id) ON DELETE CASCADE;
