@@ -61,7 +61,7 @@ CREATE TYPE status_enum AS ENUM ('online', 'offline');
 CREATE TABLE users (
 	user_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
 	username VARCHAR(24),
-	user_password VARCHAR(24),
+	user_password VARCHAR(255),
 	nickname VARCHAR(24),
 	first_name VARCHAR(50),
 	last_name VARCHAR(50),
@@ -69,7 +69,8 @@ CREATE TABLE users (
 	account_status status_enum,
 	last_online TIMESTAMP WITH TIME ZONE,
 	post_count INT,
-	profile_picture BYTEA
+	profile_picture BYTEA,
+	is_admin BOOLEAN DEFAULT FALSE
 );
 
 -- CREATE user_settings Table
