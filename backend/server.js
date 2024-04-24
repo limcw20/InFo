@@ -21,10 +21,6 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use("/auth", auth);
 
-app.get("/hello", (req, res) => {
-  res.send("hello");
-});
-
 app.listen(5001, () => {
   console.log(`Server started on port 5001`);
 });

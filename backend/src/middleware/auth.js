@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 
+//Auth Token for users when logging in
 const authUser = (req, res, next) => {
   if (!("authorization" in req.headers)) {
     return res.status(400).json({ status: "error", msg: "no token found" });
@@ -20,6 +21,7 @@ const authUser = (req, res, next) => {
   }
 };
 
+//Auth Token for admin when logging in
 const authAdmin = (req, res, next) => {
   if (!("authorization" in req.headers)) {
     return res.status(400).json({ status: "error", msg: "no token found" });
@@ -44,5 +46,7 @@ const authAdmin = (req, res, next) => {
     return res.status(403).json({ status: "error", msg: "missing token" });
   }
 };
+
+//*TO-DO: Auth Token for host users in chatrooms
 
 module.exports = { authUser, authAdmin };
