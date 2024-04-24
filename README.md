@@ -12,15 +12,18 @@
 ## Wireframe
 
 #### Envisioned App on Discovery Page
-<img src="../screenshots/WF1.png">
+![WF1](https://github.com/limcw20/InFo/assets/157563230/490cc058-5ccd-42d8-80c8-b17da1083a0f)
+
 
 #### Envisioned App on List of Chatroom Page
-<img src="../screenshots/WF2.png">
+![WF2](https://github.com/limcw20/InFo/assets/157563230/5255e12d-95ef-4978-a109-78a11958310a)
+
 
 #### Envisioned App on Chatroom Page
-<img src="../screenshots/WF3.png">
+![WF3](https://github.com/limcw20/InFo/assets/157563230/1619f28a-be7e-4d9d-8da3-434edc240ab9)
 
 
 
 ## Entity Relationship Diagram
-<img src="../screenshots/ERD.png">
+![ERD](https://github.com/limcw20/InFo/assets/157563230/da0d013c-e109-4987-b544-2380c1aac5af)
+
