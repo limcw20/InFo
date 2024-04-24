@@ -84,6 +84,11 @@ const login = async (req, res) => {
       loggedInId: user.user_id,
     };
 
+    //update last_online when user logs in, strangely it's 1 day behind without INTERVAL '1 day'
+    const updateLastOnlineQuery =
+      "UPDATE users SET last_online = CURRENT_TIMESTAMP AT TIME ZONE 'UTC+8' + INTERVAL '1 day' WHERE user_id = $1";
+    await pool.query(updateLastOnlineQuery, [user.user_id]);
+
     const access = jwt.sign(claims, process.env.ACCESS_SECRET, {
       expiresIn: "20m",
       jwtid: uuidv4(),
