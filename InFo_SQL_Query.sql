@@ -1,11 +1,23 @@
 -- Select specific tables for quick reference
 
 SELECT * FROM users
+WHERE users.username = '123123123';
 
 SELECT * FROM user_settings
 
 SELECT users.*, user_settings.category, user_settings.sub_category FROM users
 LEFT JOIN user_settings ON users.user_id = user_settings.user_id;
+
+ SELECT users.*, user_settings.category, user_settings.sub_category 
+      FROM users 
+      LEFT JOIN user_settings ON users.user_id = user_settings.user_id
+      WHERE users.username = 'edmund';
+
+
+SELECT users.*, user_settings.category, user_settings.sub_category
+FROM users
+LEFT JOIN user_settings ON users.user_id = user_settings.user_id
+WHERE user_settings.user_id = '1f836196-91c8-4264-a937-b29fd2d13957';
 
 SELECT * FROM post
 
@@ -60,7 +72,7 @@ CREATE TYPE status_enum AS ENUM ('online', 'offline');
 
 CREATE TABLE users (
 	user_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-	username VARCHAR(24),
+	username VARCHAR(24) UNIQUE,
 	user_password VARCHAR(255),
 	nickname VARCHAR(24),
 	first_name VARCHAR(50),
@@ -76,10 +88,11 @@ CREATE TABLE users (
 -- CREATE user_settings Table
 
 CREATE TABLE user_settings(
-	user_id UUID PRIMARY KEY,
-	FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
-	category VARCHAR(24) DEFAULT 'none',
-	sub_category VARCHAR(24) DEFAULT 'none'
+	user_settings_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+	user_id UUID,
+	category VARCHAR(24),
+	sub_category VARCHAR(24),
+	FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 	
 );
 
@@ -168,121 +181,3 @@ ALTER TABLE response
 ADD CONSTRAINT user_id_chatroom_id
 FOREIGN KEY (user_id, chatroom_id) REFERENCES chat_user(user_id, chatroom_id) ON DELETE CASCADE;
 
-
-
--- ALL TRIGGERS BELOW
-
--- Create trigger function to insert into user_settings table after a new row is inserted into users table
-CREATE OR REPLACE FUNCTION insert_user_settings_trigger_function()
-RETURNS TRIGGER AS $$
-BEGIN
-    INSERT INTO user_settings (user_id) VALUES (NEW.user_id);
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
--- Create trigger on the users table to execute the trigger function after insert
-CREATE TRIGGER insert_user_settings_trigger
-AFTER INSERT ON users
-FOR EACH ROW
-EXECUTE FUNCTION insert_user_settings_trigger_function();
-
-
-
---
-
-
-
--- Create trigger function to insert into chat_settings table after a new row is inserted into chat_user table
-CREATE OR REPLACE FUNCTION insert_chat_settings_trigger_function()
-RETURNS TRIGGER AS $$
-BEGIN
-    INSERT INTO chat_settings (user_id, chatroom_id) VALUES (NEW.user_id, NEW.chatroom_id);
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
--- Create trigger on the chat_user table to execute the trigger function after insert
-CREATE TRIGGER insert_chat_settings_trigger
-AFTER INSERT ON chat_user
-FOR EACH ROW
-WHEN (NEW.is_superuser = TRUE) -- if the user is a superuser then insert
-EXECUTE FUNCTION insert_chat_settings_trigger_function();
-
-
---
-
-
--- Create trigger function to insert into response table after a new row is inserted into chat_user table
-CREATE OR REPLACE FUNCTION insert_response_trigger_function()
-RETURNS TRIGGER AS $$
-BEGIN
-    INSERT INTO response (user_id, chatroom_id) VALUES (NEW.user_id, NEW.chatroom_id);
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
--- Create trigger on the chat_user table to execute the trigger function after insert
-CREATE TRIGGER insert_response_trigger
-AFTER INSERT ON chat_user
-FOR EACH ROW
-EXECUTE FUNCTION insert_response_trigger_function();
-
-
---
-
--- Create trigger into chatroom table
-CREATE OR REPLACE FUNCTION insert_chatroom_trigger_function()
-RETURNS TRIGGER AS $$
-BEGIN
-    INSERT INTO chatroom (post_id) VALUES (NEW.post_id);
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
--- Create trigger on the post table to execute the trigger function after insert
-CREATE TRIGGER insert_chatroom_trigger
-AFTER INSERT ON post
-FOR EACH ROW
-EXECUTE FUNCTION insert_chatroom_trigger_function();
-
-
-
-
--- Create trigger on chat_list to only allow viewing chatrooms if user_id matches
-CREATE OR REPLACE FUNCTION insert_chat_list_trigger_function()
-RETURNS TRIGGER AS $$
-BEGIN
-    IF EXISTS (
-        SELECT 1 FROM chat_user WHERE user_id = NEW.user_id AND chatroom_id = NEW.chatroom_id
-    ) THEN
-        RETURN NEW;
-    ELSE
-        RAISE EXCEPTION 'User is not authorized to view this chatroom.';
-    END IF;
-END;
-$$ LANGUAGE plpgsql;
-
--- Create trigger to execute 
-CREATE TRIGGER insert_chat_list_trigger
-BEFORE INSERT ON chat_list
-FOR EACH ROW
-EXECUTE FUNCTION insert_chat_list_trigger_function();
-
---
-
-
--- Check if the user is authorized to join the chatroom
-
-CREATE OR REPLACE FUNCTION check_user_authorization_trigger_function()
-RETURNS TRIGGER AS $$
-BEGIN
-    IF EXISTS (
-        SELECT 1 FROM chat_user WHERE user_id = NEW.user_id AND chatroom_id = NEW.chatroom_id
-    ) THEN
-        RETURN NEW;
-    ELSE
-        RAISE EXCEPTION 'User is not authorized to join the chatroom';
-    END IF;
-END;
-$$ LANGUAGE plpgsql;
