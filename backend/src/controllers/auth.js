@@ -31,7 +31,7 @@ const register = async (req, res) => {
         .json({ status: "error", msg: "Username already exists" });
     }
 
-    // Hash the password
+    // Hash password
     const hashedPassword = await bcrypt.hash(req.body.user_password, 12);
 
     // If username is unique, insert the new user into the database
