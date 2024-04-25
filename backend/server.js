@@ -4,6 +4,7 @@ const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
+const user = require("./src/routers/users");
 const auth = require("./src/routers/auth");
 const app = express();
 const limiter = rateLimit({
@@ -20,6 +21,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/auth", auth);
+app.use("/users", user);
 
 app.listen(5001, () => {
   console.log(`Server started on port 5001`);

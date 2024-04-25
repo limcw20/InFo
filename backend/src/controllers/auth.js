@@ -80,7 +80,7 @@ const login = async (req, res) => {
     // Generate access and refresh tokens
     const claims = {
       username: user.username,
-      role: user.role,
+      role: user.is_admin,
       loggedInId: user.user_id,
     };
 
@@ -120,11 +120,11 @@ const refresh = async (req, res) => {
       }
 
       // Extract claims from the refresh token
-      const { username, role, loggedInId } = decoded;
+      const { username, is_admin, loggedInId } = decoded;
 
       // Generate a new access token
       const newAccessToken = jwt.sign(
-        { username, role, loggedInId },
+        { username, is_admin, loggedInId },
         process.env.ACCESS_SECRET,
         {
           expiresIn: "20m",
