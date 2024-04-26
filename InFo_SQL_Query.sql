@@ -115,7 +115,6 @@ CREATE TABLE post (
 CREATE TABLE chat_settings(
 	chat_settings_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
 	user_id UUID,
-	chatroom_id UUID,
 	post_is_public BOOL DEFAULT FALSE,
 	post_is_locked BOOL DEFAULT FALSE
 );
