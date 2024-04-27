@@ -1,56 +1,35 @@
 -- Select specific tables for quick reference
 
 SELECT * FROM users
-WHERE users.username = '123123123';
 
 SELECT * FROM user_settings
 
-SELECT users.*, user_settings.category, user_settings.sub_category FROM users
-LEFT JOIN user_settings ON users.user_id = user_settings.user_id;
-
- SELECT users.*, user_settings.category, user_settings.sub_category 
-      FROM users 
-      LEFT JOIN user_settings ON users.user_id = user_settings.user_id
-      WHERE users.username = 'edmund';
-
-
-SELECT users.*, user_settings.category, user_settings.sub_category
-FROM users
-LEFT JOIN user_settings ON users.user_id = user_settings.user_id
-WHERE user_settings.user_id = '1f836196-91c8-4264-a937-b29fd2d13957';
+SELECT * FROM chat_list
 
 SELECT * FROM post
+
+SELECT * FROM chat_user
 
 SELECT * FROM chat_settings
 
 SELECT * FROM response
 
-SELECT * FROM chatroom
 
-SELECT * FROM chat_user
+-- DROP TABLES FOR TESTING
 
-SELECT * FROM chat_list
+DROP TABLE chat_list CASCADE;
 
+DROP TABLE chat_settings CASCADE;
 
--- Insert & delete test to ensure trigger function and delete cascade works
+DROP TABLE chat_user CASCADE;
 
-INSERT INTO users (username) VALUES ('chicken');
+DROP TABLE post CASCADE;
 
-DELETE FROM users WHERE username = 'chicken';
+DROP TABLE response CASCADE;
 
-Insert INTO post (user_id, post_title) VALUES ('0e56a60b-ae66-4cb4-84cc-9486f39199f1', 'hello');
+DROP TABLE user_settings CASCADE;
 
-DELETE FROM post WHERE post_id = '4d59722e-ce7d-4ab6-9c49-a6e6dd3527a8';
-
-INSERT INTO chat_user (user_id, chatroom_id, is_superuser) VALUES ('0e56a60b-ae66-4cb4-84cc-9486f39199f1', 'f73cc075-8a20-48ac-9fc8-c00605598c36', 'TRUE')
-
-INSERT INTO response (response_desc, user_id, chatroom_id) VALUES ('alibaba!!!!', '0e56a60b-ae66-4cb4-84cc-9486f39199f1', 'f73cc075-8a20-48ac-9fc8-c00605598c36')
-
-INSERT INTO chat_list (user_id, chatroom_id) VALUES ('0e56a60b-ae66-4cb4-84cc-9486f39199f1', 'f73cc075-8a20-48ac-9fc8-c00605598c36')
-
-
-SELECT * FROM chat_user WHERE user_id = '0e56a60b-ae66-4cb4-84cc-9486f39199f1' AND chatroom_id = 'f73cc075-8a20-48ac-9fc8-c00605598c36';
-
+DROP TABLE users CASCADE;
 
 -- ** EXECUTE SCRIPT FROM THIS LINE ONWARDS **
 
@@ -124,41 +103,33 @@ CREATE TABLE chat_settings(
 CREATE TABLE response(
 	response_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
 	user_id UUID,
-	chatroom_id UUID,
+	post_id UUID,
 	response_desc VARCHAR(1000),
 	response_date DATE,
 	response_img BYTEA
 );
 
 
--- Create chatroom Table
-CREATE TABLE chatroom (
-    chatroom_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    response_id UUID,
-    post_id UUID,
-    FOREIGN KEY (response_id) REFERENCES response(response_id),
-    FOREIGN KEY (post_id) REFERENCES post(post_id) ON DELETE CASCADE
-);
 
 
 -- create chat_user Table
 
 CREATE TABLE chat_user (
     user_id UUID,
-    chatroom_id UUID,
+    post_id UUID,
     is_superuser BOOL,
-    PRIMARY KEY (user_id, chatroom_id),
+    PRIMARY KEY (user_id, post_id),
     FOREIGN KEY (user_id) REFERENCES users(user_id),
-    FOREIGN KEY (chatroom_id) REFERENCES chatroom(chatroom_id)
+    FOREIGN KEY (post_id) REFERENCES post(post_id)
 );
 
 -- create chat_list Table
 
 CREATE TABLE chat_list (
 	chat_list_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    chatroom_id UUID,
+    post_id UUID,
     user_id UUID,
-    FOREIGN KEY (chatroom_id) REFERENCES chatroom(chatroom_id) ON DELETE CASCADE,
+    FOREIGN KEY (post_id) REFERENCES post(post_id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
@@ -172,11 +143,7 @@ ALTER TABLE post
 ADD CONSTRAINT chat_settings_id
 FOREIGN KEY (chat_settings_id) REFERENCES chat_settings(chat_settings_id) ON DELETE CASCADE;
 
-ALTER TABLE chat_settings
-ADD CONSTRAINT user_id_chatroom_id
-FOREIGN KEY (user_id, chatroom_id) REFERENCES chat_user(user_id, chatroom_id) ON DELETE CASCADE;
-
 ALTER TABLE response
-ADD CONSTRAINT user_id_chatroom_id
-FOREIGN KEY (user_id, chatroom_id) REFERENCES chat_user(user_id, chatroom_id) ON DELETE CASCADE;
+ADD CONSTRAINT user_id_post_id
+FOREIGN KEY (user_id, post_id) REFERENCES chat_user(user_id, post_id) ON DELETE CASCADE;
 
