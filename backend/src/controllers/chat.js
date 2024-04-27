@@ -140,7 +140,7 @@ const listOfUserInPost = async (req, res) => {
 
 const deletePostAsSuperuser = async (req, res) => {
   try {
-    const post_id = req.body.post_id;
+    const post_id = req.params.post_id;
     const user_id = req.params.user_id;
 
     // Check if the user is a superuser for the post
