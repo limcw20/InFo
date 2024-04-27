@@ -1,23 +1,27 @@
 -- Select specific tables for quick reference
 
+UPDATE users
+SET is_admin = true
+WHERE username = 'edmund';
+
 SELECT * FROM users
 
 SELECT * FROM user_settings
 
-SELECT * FROM chat_list
-
 SELECT * FROM post
+WHERE post_id = '1bbb00e3-3b70-461a-9cbc-ceef0b983f78'
 
 SELECT * FROM chat_user
 
 SELECT * FROM chat_settings
 
 SELECT * FROM response
+WHERE post_id = '1bbb00e3-3b70-461a-9cbc-ceef0b983f78'
 
 
 -- DROP TABLES FOR TESTING
 
-DROP TABLE chat_list CASCADE;
+
 
 DROP TABLE chat_settings CASCADE;
 
@@ -123,15 +127,6 @@ CREATE TABLE chat_user (
     FOREIGN KEY (post_id) REFERENCES post(post_id)
 );
 
--- create chat_list Table
-
-CREATE TABLE chat_list (
-	chat_list_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    post_id UUID,
-    user_id UUID,
-    FOREIGN KEY (post_id) REFERENCES post(post_id) ON DELETE CASCADE,
-    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
-);
 
 -- FKs THAT REQUIRE ORDER
 -- Create references
@@ -146,4 +141,9 @@ FOREIGN KEY (chat_settings_id) REFERENCES chat_settings(chat_settings_id) ON DEL
 ALTER TABLE response
 ADD CONSTRAINT user_id_post_id
 FOREIGN KEY (user_id, post_id) REFERENCES chat_user(user_id, post_id) ON DELETE CASCADE;
+
+ALTER TABLE chat_user
+ADD CONSTRAINT post_id
+FOREIGN KEY (post_id) REFERENCES post(post_id) ON DELETE CASCADE;
+
 

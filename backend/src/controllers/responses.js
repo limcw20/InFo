@@ -1,5 +1,20 @@
 const pool = require("../db/db");
 
+const getAllResponsesFromPost = async (req, res) => {
+  try {
+    const post_id = req.params.post_id;
+
+    const { rows } = await pool.query(
+      "SELECT * FROM response WHERE response.post_id = $1",
+      [post_id]
+    );
+    res.json(rows);
+  } catch (error) {
+    console.error("Error fetching responses from chat:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 const addResponseToChat = async (req, res) => {
   try {
     const user_id = req.params.user_id;
@@ -50,4 +65,4 @@ const addResponseToChat = async (req, res) => {
   }
 };
 
-module.exports = { addResponseToChat };
+module.exports = { addResponseToChat, getAllResponsesFromPost };
