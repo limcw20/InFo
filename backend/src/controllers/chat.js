@@ -95,6 +95,11 @@ const joinPost = async (req, res) => {
     const user_id = req.params.user_id;
     const post_id = req.params.post_id;
 
+    // Check if the user joining is the same as the logged-in user
+    if (user_id !== req.decoded.loggedInId) {
+      return res.status(403).json({ error: "Unauthorized access" });
+    }
+
     // Check if the user is already in chatroom
     const { rows } = await pool.query(
       `
@@ -149,6 +154,11 @@ const deletePostAsSuperuser = async (req, res) => {
   try {
     const post_id = req.params.post_id;
     const user_id = req.params.user_id;
+
+    // Check if the user deleting post is the same as the logged-in user
+    if (user_id !== req.decoded.loggedInId) {
+      return res.status(403).json({ error: "Unauthorized access" });
+    }
 
     // Check if the user is a superuser for the post
     const { rows } = await pool.query(
@@ -250,5 +260,3 @@ module.exports = {
   deletePostAsSuperuser,
   deleteUserFromPostAsSuperuser,
 };
-
-// create chat response by chat user
