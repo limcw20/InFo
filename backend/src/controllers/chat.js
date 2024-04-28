@@ -176,12 +176,72 @@ const deletePostAsSuperuser = async (req, res) => {
   }
 };
 
+const deleteUserFromPostAsSuperuser = async (req, res) => {
+  try {
+    const { post_id, user_id, target_user_id } = req.params;
+
+    // Check if the logged-in user is the superuser for the post
+    const { rows } = await pool.query(
+      `
+      SELECT is_superuser
+      FROM chat_user
+      WHERE user_id = $1 AND post_id = $2
+    `,
+      [req.decoded.loggedInId, post_id]
+    );
+
+    if (rows.length === 0 || !rows[0].is_superuser) {
+      return res
+        .status(403)
+        .json({ status: "error", msg: "Unauthorized to perform this action" });
+    }
+
+    // Check if the target user exists in the chat_user table for the specified post
+    const userExistsQuery = await pool.query(
+      `
+      SELECT 1
+      FROM chat_user
+      WHERE user_id = $1 AND post_id = $2
+    `,
+      [target_user_id, post_id]
+    );
+
+    if (userExistsQuery.rowCount === 0) {
+      return res
+        .status(404)
+        .json({ status: "error", msg: "User not found in this post" });
+    }
+
+    // Ensure the logged-in user cannot delete themselves
+    if (target_user_id === req.decoded.loggedInId) {
+      return res
+        .status(400)
+        .json({ status: "error", msg: "Cannot delete yourself from the post" });
+    }
+
+    // Delete the user from the post
+    await pool.query(
+      `
+      DELETE FROM chat_user
+      WHERE user_id = $1 AND post_id = $2
+    `,
+      [target_user_id, post_id]
+    );
+
+    res.json({ message: "User deleted from the post successfully" });
+  } catch (error) {
+    console.error("Error deleting user from post:", error);
+    res.status(500).json({ status: "error", msg: "Internal server error" });
+  }
+};
+
 module.exports = {
   createUserPost,
   getAllPostsByUserId,
   joinPost,
   listOfUserInPost,
   deletePostAsSuperuser,
+  deleteUserFromPostAsSuperuser,
 };
 
 // create chat response by chat user

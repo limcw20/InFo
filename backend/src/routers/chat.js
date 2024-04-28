@@ -5,6 +5,7 @@ const {
   joinPost,
   listOfUserInPost,
   deletePostAsSuperuser,
+  deleteUserFromPostAsSuperuser,
 } = require("../controllers/chat");
 const { authUser, authAdmin } = require("../middleware/auth");
 const { errorCheck } = require("../validators/errorCheck");
@@ -22,5 +23,10 @@ router.get("/:user_id", authUser, getAllPostsByUserId); // posts user hosted
 router.put("/:user_id/:post_id", authUser, joinPost); // which user joins which chat
 router.get("/chatuserlist/:post_id", authUser, listOfUserInPost);
 router.delete("/:user_id/:post_id", authUser, authAdmin, deletePostAsSuperuser);
+router.delete(
+  "/:user_id/:post_id/:target_user_id",
+  authUser,
+  deleteUserFromPostAsSuperuser
+);
 
 module.exports = router;
