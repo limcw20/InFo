@@ -24,7 +24,12 @@ const getUserByUsername = async (req, res) => {
 const updateUserSettings = async (req, res) => {
   try {
     const user_id = req.params.user_id;
-    console.log(user_id);
+
+    // Check if the user updating the category is the same as the logged-in user
+    if (user_id !== req.decoded.loggedInId) {
+      return res.status(403).json({ error: "Unauthorized access" });
+    }
+
     await pool.query(
       `UPDATE users
       SET nickname = $1,
@@ -51,7 +56,11 @@ const updateUserSettings = async (req, res) => {
 const addUserCategory = async (req, res) => {
   try {
     const user_id = req.params.user_id;
-    console.log(user_id);
+    // Check if the user adding the category is the same as the logged-in user
+    if (user_id !== req.decoded.loggedInId) {
+      return res.status(403).json({ error: "Unauthorized access" });
+    }
+
     await pool.query(
       `INSERT INTO user_settings (user_id, category, sub_category) VALUES ($1, $2, $3)`,
       [user_id, req.body.category, req.body.sub_category]
@@ -89,7 +98,13 @@ const deleteUserCategory = async (req, res) => {
     const user_settings_id = req.params.user_settings_id;
     const user_id = req.params.user_id;
 
-    // to check if it's the logged in / authenticated user
+    // to check if it's the logged in / authenticated user before deleting
+
+    if (user_id !== req.decoded.loggedInId) {
+      return res.status(403).json({ error: "Unauthorized access" });
+    }
+
+    // to check if it's the logged in / authenticated user (id check)
     const authUserSettings = await pool.query(
       `SELECT user_id FROM user_settings WHERE user_settings_id = $1`,
       [user_settings_id]
