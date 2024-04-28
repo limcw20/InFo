@@ -106,6 +106,18 @@ const login = async (req, res) => {
   }
 };
 
+const logout = async (req, res) => {
+  try {
+    res.clearCookie("accessToken");
+    res.clearCookie("refreshToken");
+
+    res.status(200).json({ status: "success", msg: "Logout successful" });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ status: "error", msg: "Internal server error" });
+  }
+};
+
 const refresh = async (req, res) => {
   try {
     const refreshToken = req.body.refreshToken;
@@ -140,4 +152,4 @@ const refresh = async (req, res) => {
   }
 };
 
-module.exports = { getAllUsers, register, login, refresh };
+module.exports = { getAllUsers, register, login, refresh, logout };

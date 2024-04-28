@@ -4,6 +4,7 @@ const {
   register,
   login,
   refresh,
+  logout,
 } = require("../controllers/auth");
 const { authAdmin, authUser } = require("../middleware/auth");
 
@@ -13,5 +14,6 @@ router.get("/users", authAdmin, getAllUsers);
 router.put("/users", register);
 router.post("/users", login);
 router.post("/users/refresh", refresh);
+router.post("/users/logout", authUser, logout);
 
 module.exports = router;
