@@ -160,7 +160,14 @@ const deletePostAsSuperuser = async (req, res) => {
     }
 
     // proceed with delete logic if authorized to do so
-    await pool.query("DELETE FROM post WHERE post_id = $1", [post_id]);
+    const result = await pool.query("DELETE FROM post WHERE post_id = $1", [
+      post_id,
+    ]);
+
+    if (result.rowCount === 0) {
+      // If no rows were deleted, the post does not exist
+      return res.status(404).json({ status: "error", msg: "Post not found" });
+    }
 
     res.json({ message: "Post deleted successfully" });
   } catch (error) {
