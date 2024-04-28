@@ -58,7 +58,7 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   try {
-    // Check if user with the provided email exists
+    // Check if user with the provided username exists
     const userQuery = await pool.query(
       "SELECT * FROM users WHERE username = $1",
       [req.body.username]
@@ -71,7 +71,10 @@ const login = async (req, res) => {
     }
 
     // Compare the provided password with the hashed password stored in the database
-    const result = await bcrypt.compare(req.body.password, user.user_password);
+    const result = await bcrypt.compare(
+      req.body.user_password,
+      user.user_password
+    );
     if (!result) {
       console.error("Email or password is incorrect");
       return res.status(401).json({ status: "error", msg: "Login failed" });

@@ -6,8 +6,8 @@ const validateRegistrationData = [
     min: 6,
     max: 24,
   }),
-  body("password", "Password is required").not().isEmpty(),
-  body("password", "Password min is 8 and max is 50").isLength({
+  body("user_password", "Password is required").not().isEmpty(),
+  body("user_password", "Password min is 8 and max is 50").isLength({
     min: 8,
     max: 50,
   }),
@@ -36,7 +36,7 @@ const validateRegistrationData = [
 
 const validateLoginData = [
   body("username", "username is required").not().isEmpty(),
-  body("password", "password is required").not().isEmpty(),
+  body("user_password", "password is required").not().isEmpty(),
 ];
 
 const validateRefreshToken = [
