@@ -87,13 +87,36 @@ const getUserCategoryDetails = async (req, res) => {
 const deleteUserCategory = async (req, res) => {
   try {
     const user_settings_id = req.params.user_settings_id;
+    const user_id = req.params.user_id;
+
+    // to check if it's the logged in / authenticated user
+    const authUserSettings = await pool.query(
+      `SELECT user_id FROM user_settings WHERE user_settings_id = $1`,
+      [user_settings_id]
+    );
+
+    if (authUserSettings.rowCount === 0) {
+      return res.status(404).json({ error: "Category not found" });
+    }
+
+    const auth_user_id = authUserSettings.rows[0].user_id;
+
+    if (auth_user_id !== user_id) {
+      return res.status(403).json({ error: "Unauthorized access" });
+    }
+
+    // Delete the entry from user_settings table based on user_settings_id
     const result = await pool.query(
       `DELETE FROM user_settings WHERE user_settings_id = $1`,
       [user_settings_id]
     );
+
     if (result.rowCount === 0) {
+      // If no rows were deleted, return 404 indicating no such category found
       return res.status(404).json({ error: "Category not found" });
     }
+
+    // If deletion was successful, return success message
     res.status(200).json({ message: "Category deleted successfully" });
   } catch (error) {
     console.error("Error deleting user category:", error);
