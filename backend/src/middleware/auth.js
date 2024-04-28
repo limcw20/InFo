@@ -47,7 +47,9 @@ const authAdmin = async (req, res, next) => {
       req.decoded = decoded;
       next();
     } else {
-      console.log("User is not an admin");
+      res
+        .status(403)
+        .json({ error: "Access unathorized. Only Admins allowed." });
     }
   } catch (error) {
     console.error(error.message);
