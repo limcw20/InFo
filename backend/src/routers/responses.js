@@ -3,7 +3,6 @@ const {
   addResponseToChat,
   getAllResponsesFromPost,
 } = require("../controllers/responses");
-const { getAllPostsByUserId } = require("../controllers/chat");
 
 const router = express.Router();
 
