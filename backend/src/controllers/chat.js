@@ -6,6 +6,13 @@ const createUserPost = async (req, res) => {
     const user_id = req.params.user_id;
     const { post_title, post_desc, post_img } = req.body;
 
+    // Check if the user creating the post is the same as the logged-in user
+    if (user_id !== req.decoded.loggedInId) {
+      return res
+        .status(403)
+        .json({ status: "error", msg: "Unauthorized to perform this action" });
+    }
+
     // to create as mentioned all in one transaction
     await pool.query("BEGIN");
 
@@ -178,7 +185,7 @@ const deletePostAsSuperuser = async (req, res) => {
 
 const deleteUserFromPostAsSuperuser = async (req, res) => {
   try {
-    const { post_id, user_id, target_user_id } = req.params;
+    const { post_id, target_user_id } = req.params;
 
     // Check if the logged-in user is the superuser for the post
     const { rows } = await pool.query(
