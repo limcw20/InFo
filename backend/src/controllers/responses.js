@@ -21,7 +21,13 @@ const addResponseToChat = async (req, res) => {
     const post_id = req.params.post_id;
     const { response_desc, response_img } = req.body;
 
+    // Check if the user adding response is the same as the logged-in user
+    if (user_id !== req.decoded.loggedInId) {
+      return res.status(403).json({ error: "Unauthorized access" });
+    }
+
     // to check if user is in specified post before proceeding
+
     const userInPostQuery = await pool.query(
       `SELECT COUNT(*) AS count
       FROM chat_user
@@ -69,6 +75,11 @@ const deleteResponseFromChat = async (req, res) => {
   try {
     const user_id = req.params.user_id;
     const response_id = req.params.response_id;
+
+    // Check if the user updating the category is the same as the logged-in user
+    if (user_id !== req.decoded.loggedInId) {
+      return res.status(403).json({ error: "Unauthorized access" });
+    }
 
     const { rows } = await pool.query(
       `
