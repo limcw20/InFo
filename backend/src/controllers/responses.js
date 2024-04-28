@@ -65,4 +65,45 @@ const addResponseToChat = async (req, res) => {
   }
 };
 
-module.exports = { addResponseToChat, getAllResponsesFromPost };
+const deleteResponseFromChat = async (req, res) => {
+  try {
+    const user_id = req.params.user_id;
+    const response_id = req.params.response_id;
+
+    const { rows } = await pool.query(
+      `
+      SELECT user_id
+      FROM response
+      WHERE response_id = $1
+    `,
+      [response_id]
+    );
+
+    if (rows.length === 0) {
+      return res.status(404).json({ error: "Response not found" });
+    }
+
+    const response_user_id = rows[0].user_id;
+
+    if (response_user_id !== user_id) {
+      return res
+        .status(403)
+        .json({ error: "Unauthorized to delete this response" });
+    }
+
+    await pool.query("DELETE FROM response WHERE response_id = $1", [
+      response_id,
+    ]);
+
+    res.json({ message: "Response deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting response:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+module.exports = {
+  addResponseToChat,
+  getAllResponsesFromPost,
+  deleteResponseFromChat,
+};
