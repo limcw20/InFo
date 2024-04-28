@@ -20,4 +20,6 @@ const validateBodyInPost = [
   }),
 ];
 
-module.exports = [validateBodyInPost];
+module.exports = {
+  validateBodyInPost,
+};
