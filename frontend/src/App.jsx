@@ -71,7 +71,7 @@ function App() {
                 role ? (
                   <Navigate to="/AdminPage" />
                 ) : (
-                  <Navigate to="/ChatListPage" />
+                  <Navigate to={`/chat/${userId}`} />
                 )
               ) : (
                 <LoginPage />
@@ -92,6 +92,7 @@ function App() {
             path="/AdminPage"
             element={isLoggedIn && role ? <AdminPage /> : <Navigate to="/" />}
           />
+          <Route path="/chat/:user_id" element={<ChatListPage />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Suspense>

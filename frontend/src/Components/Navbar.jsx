@@ -7,6 +7,6 @@ const Navbar = () => {
       <h1>InFo</h1>
     </div>
   );
-}; //input as ICEBOX
+};
 
 export default Navbar;

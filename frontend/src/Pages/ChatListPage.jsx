@@ -5,40 +5,49 @@ import { useParams } from "react-router-dom";
 
 const ChatListPage = () => {
   const fetchData = useFetch();
-  const [userData, setUserData] = useState(null); // Define userData state
+  const [userData, setUserData] = useState(null);
   const userCtx = useContext(UserContext);
   const [error, setError] = useState("");
-  let { id } = useParams();
-  if (!id) {
-    id = userCtx.userId;
-  }
-
-  const getPostById = async () => {
-    try {
-      setError("");
-      const res = await fetchData(
-        "/chat/" + id,
-        "GET",
-        undefined,
-        userCtx.accessToken
-      );
-      if (res.ok) {
-        const data = await res.json();
-        setUserData(data);
-      } else {
-        alert(JSON.stringify(res.data));
-        console.log(res.data);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const { user_id } = useParams(); // Destructure user_id directly from useParams()
+  console.log("User ID from URL:", user_id);
 
   useEffect(() => {
+    const getPostById = async () => {
+      try {
+        setError("");
+        const res = await fetchData(
+          `/chat/${user_id}`, // Use user_id directly from useParams()
+          "GET",
+          undefined,
+          userCtx.accessToken
+        );
+        if (res.ok) {
+          const data = await res.json();
+          setUserData(data);
+        } else {
+          alert(JSON.stringify(res.data));
+          console.log(res.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
     getPostById();
-  }, [id, userCtx.accessToken]); // Make sure to include id and accessToken in the dependency array
+  }, [user_id, userCtx.accessToken]);
 
-  return <div>{userData ? <div>hi</div> : <div>Loading...</div>}</div>;
+  return (
+    <div>
+      {userData ? (
+        <div>
+          {userData.map((post) => (
+            <ChatListDisplay key={post.post_id} post={post} />
+          ))}
+        </div>
+      ) : (
+        <div>Loading...</div>
+      )}
+    </div>
+  );
 };
 
 export default ChatListPage;
