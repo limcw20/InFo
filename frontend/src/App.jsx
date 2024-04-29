@@ -2,6 +2,8 @@ import React, { Suspense, useState } from "react";
 import UserContext from "./Context/user";
 import { Navigate, Route, Routes } from "react-router-dom";
 import LoginPage from "./Pages/LoginPage";
+import ChatListPage from "./Pages/ChatListPage";
+import AdminPage from "./Pages/AdminPage";
 
 function App() {
   const [accessToken, setAccessToken] = useState("");
@@ -30,6 +32,21 @@ function App() {
               isLoggedIn ? <Navigate to="/ChatListPage" /> : <LoginPage />
             }
           />
+          <Route
+            path="/ChatListPage"
+            element={
+              isLoggedIn ? (
+                role ? (
+                  <AdminPage />
+                ) : (
+                  <ChatListPage userId={userId} />
+                )
+              ) : (
+                <Navigate to="/" />
+              )
+            }
+          />
+          <Route path="*" element={<Navigate to="/" />} />{" "}
         </Routes>
       </Suspense>
     </UserContext.Provider>

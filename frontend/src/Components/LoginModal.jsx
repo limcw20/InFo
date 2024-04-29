@@ -22,7 +22,10 @@ const LoginForm = (props) => {
         userCtx.setAccessToken(res.data.access);
         userCtx.setUserId(res.data.user_id);
         const decoded = jwtDecode(res.data.access);
-        userCtx.setRole(decoded.role);
+
+        const isAdmin = decoded.is_admin;
+
+        userCtx.setRole(isAdmin ? "true" : "false"); // Set role based on isAdmin
       } else {
         alert(JSON.stringify(res.data));
       }
@@ -30,7 +33,6 @@ const LoginForm = (props) => {
       console.error("login Error", error);
     }
   };
-
   return (
     <div>
       <div>
