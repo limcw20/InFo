@@ -23,9 +23,11 @@ const LoginForm = (props) => {
         userCtx.setUserId(res.data.user_id);
         const decoded = jwtDecode(res.data.access);
 
-        const isAdmin = decoded.is_admin;
+        // Log the decoded token
+        console.log("Decoded Token:", decoded);
 
-        userCtx.setRole(isAdmin ? "true" : "false"); // Set role based on isAdmin
+        const isAdmin = decoded.role;
+        userCtx.setRole(isAdmin); // Set role based on isAdmin boolean value
       } else {
         alert(JSON.stringify(res.data));
       }
@@ -33,6 +35,7 @@ const LoginForm = (props) => {
       console.error("login Error", error);
     }
   };
+
   return (
     <div>
       <div>
@@ -71,8 +74,7 @@ const LoginModal = (props) => {
   return (
     <>
       {ReactDom.createPortal(
-        <LoginForm setShowLoginModal={props.setShowLoginModal}></LoginForm>,
-
+        <LoginForm setShowLoginModal={props.setShowLoginModal} />,
         document.querySelector("#modal-root")
       )}
     </>
