@@ -32,6 +32,7 @@
 
 
 ## Entity Relationship Diagram
-![ERD](https://github.com/limcw20/InFo/assets/157563230/e33c7606-8505-46ac-b495-dfc8932b551b)
+![GA Capstone Project](https://github.com/limcw20/InFo/assets/157563230/97d0486a-5cc3-4d96-b0f0-855a6106e9fd)
+
 
 
