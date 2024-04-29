@@ -252,6 +252,47 @@ const deleteUserFromPostAsSuperuser = async (req, res) => {
   }
 };
 
+const getRandomPost = async (req, res) => {
+  try {
+    const user_id = req.params.user_id;
+
+    // Query to get a random post that the user has not joined
+    const randomPostQuery = await pool.query(
+      `SELECT post_id
+       FROM post
+       WHERE post_id NOT IN (
+         SELECT post_id
+         FROM chat_user
+         WHERE user_id = $1
+       )
+       ORDER BY RANDOM()
+       LIMIT 1`,
+      [user_id]
+    );
+
+    if (randomPostQuery.rows.length === 0) {
+      return res.status(404).json({ error: "No available posts" });
+    }
+
+    const randomPostId = randomPostQuery.rows[0].post_id;
+
+    // Fetch details of the random post
+    const postDetailsQuery = await pool.query(
+      `SELECT *
+       FROM post
+       WHERE post_id = $1`,
+      [randomPostId]
+    );
+
+    const randomPost = postDetailsQuery.rows[0];
+
+    res.json(randomPost);
+  } catch (error) {
+    console.error("Error fetching random post:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 module.exports = {
   createUserPost,
   getAllPostsByUserId,
@@ -259,4 +300,5 @@ module.exports = {
   listOfUserInPost,
   deletePostAsSuperuser,
   deleteUserFromPostAsSuperuser,
+  getRandomPost,
 };

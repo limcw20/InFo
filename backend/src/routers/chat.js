@@ -6,6 +6,7 @@ const {
   listOfUserInPost,
   deletePostAsSuperuser,
   deleteUserFromPostAsSuperuser,
+  getRandomPost,
 } = require("../controllers/chat");
 const { authUser, authAdmin } = require("../middleware/auth");
 const { errorCheck } = require("../validators/errorCheck");
@@ -28,5 +29,5 @@ router.delete(
   authUser,
   deleteUserFromPostAsSuperuser
 );
-
+router.get("/randompost/:user_id", getRandomPost);
 module.exports = router;
