@@ -4,6 +4,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import LoginPage from "./Pages/LoginPage";
 import ChatListPage from "./Pages/ChatListPage";
 import AdminPage from "./Pages/AdminPage";
+import useFetch from "./Hooks/useFetch";
 
 function App() {
   const [accessToken, setAccessToken] = useState("");
@@ -26,24 +27,27 @@ function App() {
     if (role !== null) {
       return; // dont do anything after role is set
     }
-    // Fetch user data and set role based on is_admin field
+
     const fetchUserData = async () => {
+      const fetchData = useFetch();
       try {
         if (isLoggedIn) {
           // Fetch user data from backend
-          const userDataResponse = await fetch("/auth/users", {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          });
-
-          console.log(userDataResponse);
+          const userDataResponse = await fetchData(
+            "/auth/users",
+            "GET",
+            undefined,
+            userCtx.accessToken
+          );
 
           if (userDataResponse.ok) {
-            const userData = userDataResponse;
-            console.log(userData);
+            const userData = await userDataResponse.json();
             const isAdmin = userData.is_admin;
+            const loggedInUserId = userData.user_id;
             setRole(isAdmin);
+            setUserId(loggedInUserId);
+            console.log(isAdmin);
+            console.log(loggedInUserId);
           } else {
             // Handle error fetching user data
             console.error("Error fetching user data:", userDataResponse);
@@ -55,10 +59,7 @@ function App() {
     };
 
     fetchUserData(); // Call fetchUserData on mount
-    console.log("isLoggedIn:", isLoggedIn);
-    console.log("role:", role);
-    console.log(accessToken);
-  }, [accessToken, isLoggedIn]); // Add accessToken and isLoggedIn to dependency array
+  }, [accessToken, isLoggedIn, role]); // Add accessToken, isLoggedIn, and role to dependency array
 
   return (
     <UserContext.Provider value={userContextValue}>
@@ -88,11 +89,12 @@ function App() {
               )
             }
           />
+          <Route path="/chat/:user_id" element={<ChatListPage />} />
           <Route
             path="/AdminPage"
             element={isLoggedIn && role ? <AdminPage /> : <Navigate to="/" />}
           />
-          <Route path="/chat/:user_id" element={<ChatListPage />} />
+
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Suspense>
