@@ -32,7 +32,7 @@ const Chatroom = () => {
 
   useEffect(() => {
     getAllInfoFromPost();
-  }, [post_id, userCtx.accessToken]); // Make sure to include post_id and accessToken in the dependency array
+  }, [post_id, userCtx.accessToken]);
 
   return (
     <>
@@ -53,6 +53,8 @@ const Chatroom = () => {
           ) : (
             <div>No response yet found</div>
           )}
+          User List:
+          <h5>{posts.post.user_id}</h5>
         </>
       )}
       {error && <div>{error}</div>}

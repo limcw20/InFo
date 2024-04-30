@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import useFetch from "../Hooks/useFetch";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import DiscoverPassButton from "./DiscoverPassButton";
 import UserContext from "../Context/user";
 import DiscoverJoinButton from "./DiscoverJoinButton";
@@ -56,7 +56,7 @@ const Discover = () => {
 
       console.log(res);
       if (res.ok) {
-        res.json({ msg: "hi" });
+        return <Link to={`/responses/${posts.post_id}`}></Link>;
       } else {
         setError("Error fetching posts");
       }
@@ -75,7 +75,7 @@ const Discover = () => {
       <h3>{posts.post_title}</h3>
       <p>{posts.post_desc}</p>
       <DiscoverPassButton handleClick={handleGetPost} />
-      <DiscoverJoinButton handleClick={handleJoinPost} />
+      <DiscoverJoinButton handleJoinClick={handleJoinPost} />
     </>
   );
 };
