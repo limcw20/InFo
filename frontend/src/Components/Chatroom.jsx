@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import useFetch from "../Hooks/useFetch";
 import UserContext from "../Context/user";
 import { useParams } from "react-router-dom";
+import ChatroomResponse from "./ChatroomResponse";
 
 const Chatroom = () => {
   const fetchData = useFetch();
@@ -34,6 +35,33 @@ const Chatroom = () => {
     getAllInfoFromPost();
   }, [post_id, userCtx.accessToken]);
 
+  const refreshPost = async () => {
+    // Perform data fetching again after response submission
+    await getAllInfoFromPost();
+  };
+
+  const handleDelete = async (responseId) => {
+    try {
+      setError("");
+      const res = await fetchData(
+        `/responses/${userCtx.userId}/${responseId}`,
+        "DELETE",
+        undefined,
+        userCtx.accessToken
+      );
+
+      if (res.ok) {
+        console.log("Response deleted successfully");
+        refreshPost(); // Refresh posts after deletion
+      } else {
+        setError("Error deleting response");
+      }
+    } catch (error) {
+      setError("Error deleting response");
+      console.error(error);
+    }
+  };
+
   return (
     <>
       {posts && posts.post && (
@@ -46,6 +74,9 @@ const Chatroom = () => {
               {posts.responses.map((response) => (
                 <li key={response.response_id}>
                   <h3>{response.response_desc}</h3>
+                  <button onClick={() => handleDelete(response.response_id)}>
+                    Delete
+                  </button>
                   <p>{response.response_date}</p>
                 </li>
               ))}
@@ -55,6 +86,7 @@ const Chatroom = () => {
           )}
           User List:
           <h5>{posts.post.user_id}</h5>
+          <ChatroomResponse refreshPost={refreshPost}></ChatroomResponse>
         </>
       )}
       {error && <div>{error}</div>}
