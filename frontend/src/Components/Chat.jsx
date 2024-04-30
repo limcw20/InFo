@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import useFetch from "../Hooks/useFetch";
 
 import UserContext from "../Context/user";
+import { Link } from "react-router-dom";
 
 const Chat = (props) => {
   const fetchData = useFetch();
@@ -43,6 +44,7 @@ const Chat = (props) => {
             <li key={post.post_id}>
               <h3>{post.post_title}</h3>
               <p>{post.post_desc}</p>
+              <Link to={`/responses/${post.post_id}`}>Chat with Post</Link>
             </li>
           ))}
         </ul>
