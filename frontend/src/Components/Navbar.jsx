@@ -1,12 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./NavBar.module.css";
-import ChatListPage from "../Pages/ChatListPage";
-import PostInFoPage from "../Pages/PostInFoPage";
-import DiscoverPage from "../Pages/DiscoverPage";
-import SettingsPage from "../Pages/SettingsPage";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import UserContext from "../Context/user";
 
 const Navbar = () => {
+  const { user_id } = useParams();
+  const userCtx = useContext(UserContext);
   return (
     <header className={styles.navbar}>
       <nav>
@@ -15,7 +14,7 @@ const Navbar = () => {
             <Link to="/discover">Discover</Link>
           </li>
           <li>
-            <Link to="/chat">Chat List</Link>
+            <Link to={`/chat/${user_id || userCtx.userId}`}>Chat List</Link>
           </li>
           <li>
             <Link to="/postInFo">Post InFo</Link>
