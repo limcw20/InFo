@@ -78,7 +78,7 @@ const getAllPostsByUserId = async (req, res) => {
       LEFT JOIN 
         chat_user chat_user ON post.post_id = chat_user.post_id AND chat_user.user_id = $1
       WHERE 
-        post.user_id = $1
+        chat_user.user_id = $1
     `,
       [user_id]
     );

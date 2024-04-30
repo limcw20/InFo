@@ -23,8 +23,7 @@ const ChatListPage = () => {
         userCtx.accessToken
       );
       if (res.ok) {
-        const data = await res.json();
-        setPosts(data); // Set the fetched posts to the state
+        setPosts(res.data); // Set the fetched posts to the state
       } else {
         setError("Error fetching posts");
       }
@@ -40,7 +39,7 @@ const ChatListPage = () => {
 
   return (
     <div>
-      <h1>Posts created by user {user_id}</h1>
+      <h1>Posts you participate in:</h1>
       {posts.length > 0 ? (
         <ul>
           {posts.map((post) => (

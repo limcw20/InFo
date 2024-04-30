@@ -20,8 +20,9 @@ const LoginForm = (props) => {
 
       if (res.ok) {
         userCtx.setAccessToken(res.data.access);
-        userCtx.setUserId(res.data.user_id);
+
         const decoded = jwtDecode(res.data.access);
+        userCtx.setUserId(decoded.loggedInId);
 
         // Log the decoded token
         console.log("Decoded Token:", decoded);

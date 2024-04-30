@@ -15,7 +15,7 @@ const { errorCheck } = require("../validators/errorCheck");
 
 const router = express.Router();
 
-router.post("/:username", authUser, getUserByUsername);
+router.get("/:username", authUser, getUserByUsername);
 router.patch(
   "/:user_id",
   validateUpdateUserDetails,
