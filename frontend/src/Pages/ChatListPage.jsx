@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import UserContext from "../Context/user";
 import useFetch from "../Hooks/useFetch";
 import { useParams } from "react-router-dom";
+import Navbar from "../Components/Navbar";
 
 const ChatListPage = () => {
   const fetchData = useFetch();
@@ -38,7 +39,8 @@ const ChatListPage = () => {
   }, [user_id, userCtx.accessToken]); // Make sure to include user_id and accessToken in the dependency array
 
   return (
-    <div>
+    <>
+      <Navbar></Navbar>
       <h1>Posts you participate in:</h1>
       {posts.length > 0 ? (
         <ul>
@@ -52,7 +54,7 @@ const ChatListPage = () => {
       ) : (
         <div>{error ? error : "No posts found"}</div>
       )}
-    </div>
+    </>
   );
 };
 

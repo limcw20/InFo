@@ -23,43 +23,45 @@ function App() {
   const isLoggedIn = !!accessToken;
 
   return (
-    <UserContext.Provider value={userContextValue}>
-      <Suspense fallback={<h1>Loading</h1>}>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              isLoggedIn ? (
-                role ? (
-                  <Navigate to="/AdminPage" />
+    <>
+      <UserContext.Provider value={userContextValue}>
+        <Suspense fallback={<h1>Loading</h1>}>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                isLoggedIn ? (
+                  role ? (
+                    <Navigate to="/AdminPage" />
+                  ) : (
+                    <Navigate to={`/chat/${userId}`} />
+                  )
                 ) : (
-                  <Navigate to={`/chat/${userId}`} />
+                  <LoginPage />
                 )
-              ) : (
-                <LoginPage />
-              )
-            }
-          />
-          <Route
-            path="/chat"
-            element={
-              isLoggedIn && !role ? (
-                <ChatListPage userId={userId} />
-              ) : (
-                <Navigate to="/" />
-              )
-            }
-          />
-          <Route path="/chat/:user_id" element={<ChatListPage />} />
-          <Route
-            path="/AdminPage"
-            element={isLoggedIn && role ? <AdminPage /> : <Navigate to="/" />}
-          />
+              }
+            />
+            <Route
+              path="/chat"
+              element={
+                isLoggedIn && !role ? (
+                  <ChatListPage userId={userId} />
+                ) : (
+                  <Navigate to="/" />
+                )
+              }
+            />
+            <Route path="/chat/:user_id" element={<ChatListPage />} />
+            <Route
+              path="/AdminPage"
+              element={isLoggedIn && role ? <AdminPage /> : <Navigate to="/" />}
+            />
 
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
-      </Suspense>
-    </UserContext.Provider>
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+        </Suspense>
+      </UserContext.Provider>
+    </>
   );
 }
 
