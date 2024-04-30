@@ -109,7 +109,7 @@ CREATE TABLE response(
 	user_id UUID,
 	post_id UUID,
 	response_desc VARCHAR(1000),
-	response_date DATE,
+	response_date TIMESTAMP ,
 	response_img BYTEA
 );
 
