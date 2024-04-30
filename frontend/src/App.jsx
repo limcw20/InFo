@@ -4,6 +4,10 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import LoginPage from "./Pages/LoginPage";
 import ChatListPage from "./Pages/ChatListPage";
 import AdminPage from "./Pages/AdminPage";
+import DiscoverPage from "./Pages/DiscoverPage";
+import PostInFoPage from "./Pages/PostInFoPage";
+import SettingsPage from "./Pages/SettingsPage";
+import Chatroom from "./Components/Chatroom";
 
 function App() {
   const [accessToken, setAccessToken] = useState("");
@@ -56,7 +60,13 @@ function App() {
               path="/AdminPage"
               element={isLoggedIn && role ? <AdminPage /> : <Navigate to="/" />}
             />
-
+            <Route
+              path="/discover"
+              element={<DiscoverPage userId={userId} />}
+            />
+            <Route path="/postinfo" element={<PostInFoPage />} />
+            <Route path="/settings" element={<SettingsPage />} />
+            <Route path="/responses/:post_id" element={<Chatroom />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </Suspense>
