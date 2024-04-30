@@ -4,11 +4,21 @@ const getAllResponsesFromPost = async (req, res) => {
   try {
     const post_id = req.params.post_id;
 
-    const { rows } = await pool.query(
-      "SELECT * FROM response WHERE response.post_id = $1",
+    const { rows: responses } = await pool.query(
+      `SELECT * FROM response WHERE response.post_id = $1 `,
       [post_id]
     );
-    res.json(rows);
+    const { rows: post } = await pool.query(
+      `SELECT * FROM post WHERE post_id = $1`,
+      [post_id]
+    );
+
+    const { rows: userlist } = await pool.query(
+      `SELECT * FROM chat_user WHERE post_id = $1`,
+      [post_id]
+    );
+
+    res.json({ post: post[0], responses, userlist });
   } catch (error) {
     console.error("Error fetching responses from chat:", error);
     res.status(500).json({ error: "Internal server error" });
