@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import useFetch from "../Hooks/useFetch";
-import { Link, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import DiscoverPassButton from "./DiscoverPassButton";
 import UserContext from "../Context/user";
 import DiscoverJoinButton from "./DiscoverJoinButton";
@@ -14,6 +14,7 @@ const Discover = () => {
   if (!user_id) {
     user_id = userCtx.userId;
   }
+  const navigate = useNavigate();
 
   const getRandomPost = async () => {
     try {
@@ -56,7 +57,7 @@ const Discover = () => {
 
       console.log(res);
       if (res.ok) {
-        return <Link to={`/responses/${posts.post_id}`}></Link>;
+        navigate(`/responses/${posts.post_id}`);
       } else {
         setError("Error fetching posts");
       }

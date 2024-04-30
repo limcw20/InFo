@@ -1,6 +1,6 @@
 import React, { Suspense, useState } from "react";
 import UserContext from "./Context/user";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import LoginPage from "./Pages/LoginPage";
 import ChatListPage from "./Pages/ChatListPage";
 import AdminPage from "./Pages/AdminPage";
@@ -8,11 +8,13 @@ import DiscoverPage from "./Pages/DiscoverPage";
 import PostInFoPage from "./Pages/PostInFoPage";
 import SettingsPage from "./Pages/SettingsPage";
 import Chatroom from "./Components/Chatroom";
+import Navbar from "./Components/Navbar";
 
 function App() {
   const [accessToken, setAccessToken] = useState("");
   const [userId, setUserId] = useState("");
   const [role, setRole] = useState(null);
+  const location = useLocation();
 
   const userContextValue = {
     accessToken,
@@ -26,9 +28,12 @@ function App() {
   // Convert accessToken value to a boolean to see if the user is logged in
   const isLoggedIn = !!accessToken;
 
+  const NavbarExclusion =
+    location.pathname !== "/" && location.pathname !== "/AdminPage";
   return (
     <>
       <UserContext.Provider value={userContextValue}>
+        {NavbarExclusion && <Navbar />}
         <Suspense fallback={<h1>Loading</h1>}>
           <Routes>
             <Route

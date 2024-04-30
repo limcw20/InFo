@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import Navbar from "../Components/Navbar";
+
 import Chat from "../Components/Chat";
 import UserContext from "../Context/user";
 import { useParams } from "react-router-dom";
@@ -12,7 +12,6 @@ const ChatListPage = () => {
   }
   return (
     <>
-      <Navbar></Navbar>
       <Chat user_id={user_id}></Chat>
     </>
   );
