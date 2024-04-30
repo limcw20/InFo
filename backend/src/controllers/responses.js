@@ -56,19 +56,45 @@ const addResponseToChat = async (req, res) => {
     let query;
     let values;
 
+    const options = {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false,
+      timeZone: "Asia/Singapore",
+    };
+
+    const date = new Date();
+    date.setHours(date.getHours() + 8);
+    const formattedDate = date.toLocaleString("en-US", options);
+    const formattedTimestamp = formattedDate.replace(
+      /(\d+)\/(\d+)\/(\d+), (\d+):(\d+):(\d+)/,
+      "$3-$1-$2 $4:$5:$6"
+    );
+    console.log(formattedTimestamp);
+
     //respond with vs without image
     if (response_img) {
       query = `
         INSERT INTO response (user_id, post_id, response_desc, response_img, response_date)
-        VALUES ($1, $2, $3, $4, CURRENT_DATE)
+        VALUES ($1, $2, $3, $4, $5)
       `;
-      values = [user_id, post_id, response_desc, response_img];
+      values = [
+        user_id,
+        post_id,
+        response_desc,
+        response_img,
+        formattedTimestamp,
+      ];
     } else {
       query = `
         INSERT INTO response (user_id, post_id, response_desc, response_date)
-        VALUES ($1, $2, $3, CURRENT_DATE)
+        VALUES ($1, $2, $3, $4)
       `;
-      values = [user_id, post_id, response_desc];
+      values = [user_id, post_id, response_desc, formattedTimestamp];
     }
 
     // Execute the query
