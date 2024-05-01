@@ -3,6 +3,7 @@ import useFetch from "../Hooks/useFetch";
 import UserContext from "../Context/user";
 import { useParams } from "react-router-dom";
 import ChatroomResponse from "./ChatroomResponse";
+import ChatRoomUserList from "./ChatRoomUserList";
 
 const Chatroom = () => {
   const fetchData = useFetch();
@@ -64,11 +65,15 @@ const Chatroom = () => {
 
   return (
     <>
+      User List:
+      <ChatRoomUserList post_id={post_id} />
       {posts && posts.post && (
         <>
           <h1>{posts.post.post_title}:</h1>
           <h3>{posts.post.post_desc}</h3>
           <p>{posts.post.post_date}</p>
+          <p>{posts.post.category}</p>
+          <p>{posts.post.sub_category}</p>
           {Array.isArray(posts.responses) && posts.responses.length > 0 ? (
             <ul>
               {posts.responses.map((response) => (
@@ -84,8 +89,7 @@ const Chatroom = () => {
           ) : (
             <div>No response yet found</div>
           )}
-          User List:
-          <h5>{posts.post.user_id}</h5>
+
           <ChatroomResponse refreshPost={refreshPost}></ChatroomResponse>
         </>
       )}
