@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import useFetch from "../Hooks/useFetch";
 import UserContext from "../Context/user";
+import AddCategorySettings from "./AddCategorySettings";
 
 const CategorySettings = () => {
   const fetchData = useFetch();
@@ -31,6 +32,10 @@ const CategorySettings = () => {
     getUserCategories();
   }, [userCtx.accessToken]);
 
+  const refreshCategories = async () => {
+    await getUserCategories();
+  };
+
   const handleDelete = async (user_settings_id) => {
     try {
       setError("");
@@ -42,7 +47,7 @@ const CategorySettings = () => {
       );
       if (res.ok) {
         console.log("Category deleted successfully");
-        getUserCategories(); // Refresh categories after deletion
+        refreshCategories();
       } else {
         setError("Error deleting category");
       }
@@ -71,6 +76,7 @@ const CategorySettings = () => {
       ) : (
         <div>{error ? error : "No categories found"}</div>
       )}
+      <AddCategorySettings refreshCategories={refreshCategories} />
     </>
   );
 };
