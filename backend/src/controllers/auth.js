@@ -98,6 +98,29 @@ const deleteOnePost = async (req, res) => {
   }
 };
 
+const deleteOneUser = async (req, res) => {
+  try {
+    const { user_id } = req.params;
+
+    const result = await pool.query(
+      `
+      DELETE FROM users
+      WHERE user_id = $1
+`,
+      [user_id]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.json({ message: "User deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 const login = async (req, res) => {
   try {
     // Check if user with the provided username exists
@@ -201,6 +224,7 @@ module.exports = {
   getAllUsers,
   getAllUserPosts,
   deleteOnePost,
+  deleteOneUser,
   register,
   login,
   refresh,

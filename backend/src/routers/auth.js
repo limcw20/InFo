@@ -7,6 +7,7 @@ const {
   logout,
   getAllUserPosts,
   deleteOnePost,
+  deleteOneUser,
 } = require("../controllers/auth");
 const { authAdmin, authUser } = require("../middleware/auth");
 const {
@@ -25,5 +26,6 @@ router.post("/users", validateLoginData, errorCheck, login);
 router.post("/users/refresh", validateRefreshToken, errorCheck, refresh);
 router.post("/users/logout", authUser, logout);
 router.delete("/posts/:post_id", authAdmin, deleteOnePost);
+router.delete("/users/:user_id", authAdmin, deleteOneUser);
 
 module.exports = router;
