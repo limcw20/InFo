@@ -3,6 +3,7 @@ import useFetch from "../Hooks/useFetch";
 import UserContext from "../Context/user";
 import { useParams } from "react-router-dom";
 import EditUserInfo from "../Components/EditUserInfo";
+import CategorySettings from "../Components/CategorySettings";
 
 const SettingsPage = () => {
   const fetchData = useFetch();
@@ -95,6 +96,7 @@ const SettingsPage = () => {
         )}
         {error && <p className="error-message">{error}</p>}
       </div>
+      <CategorySettings></CategorySettings>
     </>
   );
 };
