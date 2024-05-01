@@ -70,9 +70,7 @@ const AdminPostControl = () => {
               <p>{post.post_date}</p>
               <p>{post.username}</p>
               <p>{post.nickname}</p>
-              <button onClick={() => handleDelete(post.post_id)}>
-                Delete
-              </button>{" "}
+              <button onClick={() => handleDelete(post.post_id)}>Delete</button>
               {/* Pass post_id to handleDelete */}
             </li>
           ))}
