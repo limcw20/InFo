@@ -2,15 +2,15 @@ import React, { useContext, useEffect, useState } from "react";
 import useFetch from "../Hooks/useFetch";
 import UserContext from "../Context/user";
 import ChatroomDeletePostButton from "./ChatroomDeletePostButton";
-import { useParams } from "react-router-dom";
 
 const ChatRoomUserList = (props) => {
   const fetchData = useFetch();
   const [users, setUsers] = useState([]);
   const [error, setError] = useState("");
+  const { post_id } = props;
   const userCtx = useContext(UserContext);
   const user_id = userCtx.userId;
-  const { post_id } = props;
+
   const getUserList = async () => {
     try {
       setError("");

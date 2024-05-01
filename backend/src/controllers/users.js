@@ -84,7 +84,9 @@ const getUserCategoryDetails = async (req, res) => {
       [user_id]
     );
     if (rows.length === 0) {
-      return res.status(404).json({ status: "error", msg: "User not found" });
+      return res
+        .status(404)
+        .json({ status: "error", msg: "Category not found" });
     }
     res.json(rows);
   } catch (error) {
