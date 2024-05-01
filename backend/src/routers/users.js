@@ -34,8 +34,7 @@ router.get("/:user_id/category", authUser, getUserCategoryDetails);
 router.delete(
   "/:user_settings_id/:user_id",
   authUser,
-  validateUserSettings,
-  errorCheck,
+
   deleteUserCategory
 );
 module.exports = router;

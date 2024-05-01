@@ -4,44 +4,67 @@ import UserContext from "../Context/user";
 
 const CategorySettings = () => {
   const fetchData = useFetch();
-  const [category, setCategory] = useState([]);
+  const [categories, setCategories] = useState([]);
   const userCtx = useContext(UserContext);
   const [error, setError] = useState("");
-  const user_id = userCtx.userId;
 
   const getUserCategories = async () => {
     try {
       setError("");
       const res = await fetchData(
-        `/users/${user_id}/category`,
+        `/users/${userCtx.userId}/category`,
         "GET",
         undefined,
         userCtx.accessToken
       );
       if (res.ok) {
-        setCategory(res.data);
+        setCategories(res.data);
       } else {
-        setError("Error fetching Categories");
+        setError("Error fetching categories");
       }
     } catch (error) {
       setError("Error fetching categories");
     }
   };
+
   useEffect(() => {
     getUserCategories();
   }, [userCtx.accessToken]);
 
+  const handleDelete = async (user_settings_id) => {
+    try {
+      setError("");
+      const res = await fetchData(
+        `/users/${user_settings_id}/${userCtx.userId}`,
+        "DELETE",
+        undefined,
+        userCtx.accessToken
+      );
+      if (res.ok) {
+        console.log("Category deleted successfully");
+        getUserCategories(); // Refresh categories after deletion
+      } else {
+        setError("Error deleting category");
+      }
+    } catch (error) {
+      setError("Error deleting category");
+      console.error(error);
+    }
+  };
+
   return (
     <>
-      {category.length > 0 ? (
+      {categories.length > 0 ? (
         <ul>
-          {category.map((category) => (
-            <li key={category.user_settings_id}>
-              <p>{category.category}</p>
-              <p>{category.sub_category}</p>
-
-              {/* <button onClick={() => handleDelete(post.post_id)}>Delete</button>
-               */}
+          {categories.map((userCategory) => (
+            <li key={userCategory.user_settings_id}>
+              <p>{userCategory.category}</p>
+              <p>{userCategory.sub_category}</p>
+              <button
+                onClick={() => handleDelete(userCategory.user_settings_id)}
+              >
+                Delete
+              </button>
             </li>
           ))}
         </ul>
