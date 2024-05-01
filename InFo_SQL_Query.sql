@@ -47,7 +47,6 @@ CREATE TYPE gender_enum AS ENUM ('male', 'female', 'other');
 CREATE TYPE status_enum AS ENUM ('online', 'offline');
 
 
-
 -- TABLES
 
 
@@ -64,7 +63,7 @@ CREATE TABLE users (
 	account_status status_enum,
 	last_online TIMESTAMP WITH TIME ZONE,
 	post_count INT,
-	profile_picture BYTEA,
+	profile_picture VARCHAR(255),
 	is_admin BOOLEAN DEFAULT FALSE
 );
 
@@ -88,7 +87,7 @@ CREATE TABLE post (
 	chat_settings_id UUID,
 	post_title VARCHAR(30),
 	post_desc VARCHAR(1000),
-	post_img BYTEA,
+	post_img VARCHAR(255),
     post_date DATE
 );
 
@@ -110,7 +109,7 @@ CREATE TABLE response(
 	post_id UUID,
 	response_desc VARCHAR(1000),
 	response_date TIMESTAMP ,
-	response_img BYTEA
+	response_img VARCHAR(255)
 );
 
 
@@ -123,9 +122,10 @@ CREATE TABLE chat_user (
     post_id UUID,
     is_superuser BOOL,
     PRIMARY KEY (user_id, post_id),
-    FOREIGN KEY (user_id) REFERENCES users(user_id),
-    FOREIGN KEY (post_id) REFERENCES post(post_id)
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+     FOREIGN KEY (post_id) REFERENCES post(post_id) ON DELETE CASCADE
 );
+
 
 
 -- FKs THAT REQUIRE ORDER
