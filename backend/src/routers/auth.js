@@ -24,7 +24,7 @@ router.get("/posts", authAdmin, getAllUserPosts);
 router.put("/users", validateRegistrationData, errorCheck, register);
 router.post("/users", validateLoginData, errorCheck, login);
 router.post("/users/refresh", validateRefreshToken, errorCheck, refresh);
-router.post("/users/logout", authUser, logout);
+router.post("/users/logout", logout);
 router.delete("/posts/:post_id", authAdmin, deleteOnePost);
 router.delete("/users/:user_id", authAdmin, deleteOneUser);
 

@@ -1,12 +1,12 @@
 const pool = require("../db/db");
 
-const getUserByUsername = async (req, res) => {
+const getUserByUserId = async (req, res) => {
   try {
-    const username = req.params.username;
+    const userId = req.params.user_id;
     const { rows } = await pool.query(
       `SELECT * FROM users
-       WHERE users.username = $1`,
-      [username]
+       WHERE users.user_id = $1`,
+      [userId]
     );
 
     // If no user found with the given username
@@ -140,7 +140,7 @@ const deleteUserCategory = async (req, res) => {
 };
 
 module.exports = {
-  getUserByUsername,
+  getUserByUserId,
   updateUserSettings,
   addUserCategory,
   getUserCategoryDetails,

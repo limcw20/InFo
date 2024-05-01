@@ -1,10 +1,10 @@
 const express = require("express");
 const {
-  getUserByUsername,
   updateUserSettings,
   addUserCategory,
   getUserCategoryDetails,
   deleteUserCategory,
+  getUserByUserId,
 } = require("../controllers/users");
 const { authUser, authAdmin } = require("../middleware/auth");
 const {
@@ -15,7 +15,7 @@ const { errorCheck } = require("../validators/errorCheck");
 
 const router = express.Router();
 
-router.get("/:username", authUser, getUserByUsername);
+router.get("/:user_id", authUser, getUserByUserId);
 router.patch(
   "/:user_id",
   validateUpdateUserDetails,
