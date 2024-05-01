@@ -9,6 +9,7 @@ import PostInFoPage from "./Pages/PostInFoPage";
 import SettingsPage from "./Pages/SettingsPage";
 import Chatroom from "./Components/Chatroom";
 import Navbar from "./Components/Navbar";
+import LogoutButton from "./Components/LogoutButton";
 
 function App() {
   const [accessToken, setAccessToken] = useState("");
@@ -30,10 +31,13 @@ function App() {
 
   const NavbarExclusion =
     location.pathname !== "/" && location.pathname !== "/AdminPage";
+  const LogoutExclusion = location.pathname !== "/";
+
   return (
     <>
       <UserContext.Provider value={userContextValue}>
         {NavbarExclusion && <Navbar />}
+        {isLoggedIn && LogoutExclusion && <LogoutButton />}
         <Suspense fallback={<h1>Loading</h1>}>
           <Routes>
             <Route
@@ -73,6 +77,7 @@ function App() {
             <Route path="/settings" element={<SettingsPage />} />
             <Route path="/responses/:post_id" element={<Chatroom />} />
             <Route path="*" element={<Navigate to="/" />} />
+            <Route path="/" element={<Navigate to="/" />} />
           </Routes>
         </Suspense>
       </UserContext.Provider>
