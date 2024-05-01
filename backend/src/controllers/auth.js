@@ -18,6 +18,25 @@ const getAllUsers = async (req, res) => {
   }
 };
 
+const getAllUserPosts = async (req, res) => {
+  try {
+    try {
+      const result =
+        await pool.query(`SELECT post.*, users.username, users.nickname
+      FROM post
+      JOIN users ON post.user_id = users.user_id;
+      `);
+      res.json(result.rows);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Internal Server Error");
+    }
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).json({ status: "error", msg: "error getting users" });
+  }
+};
+
 const register = async (req, res) => {
   try {
     // Check if username already exists
@@ -53,6 +72,29 @@ const register = async (req, res) => {
     return res
       .status(500)
       .json({ status: "error", msg: "Internal server error" });
+  }
+};
+
+const deleteOnePost = async (req, res) => {
+  try {
+    const { post_id } = req.params;
+
+    const result = await pool.query(
+      `
+      DELETE FROM post
+      WHERE post_id = $1
+`,
+      [post_id]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: "Post not found" });
+    }
+
+    res.json({ message: "Post deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting post:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 
@@ -155,4 +197,12 @@ const refresh = async (req, res) => {
   }
 };
 
-module.exports = { getAllUsers, register, login, refresh, logout };
+module.exports = {
+  getAllUsers,
+  getAllUserPosts,
+  deleteOnePost,
+  register,
+  login,
+  refresh,
+  logout,
+};
