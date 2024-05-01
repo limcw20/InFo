@@ -43,7 +43,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- Define custom ENUM types
 
-CREATE TYPE gender_enum AS ENUM ('male', 'female', 'other');
+CREATE TYPE gender_enum AS ENUM ('Male', 'Female', 'Others');
 CREATE TYPE status_enum AS ENUM ('online', 'offline');
 
 

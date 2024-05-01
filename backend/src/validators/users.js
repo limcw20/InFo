@@ -41,9 +41,9 @@ const validateUpdateUserDetails = [
     "last_name",
     "Last name must contain only alphabetic characters"
   ).matches(/^[a-zA-Z]+$/),
-  body("gender", "gender can only be male, female, or others")
+  body("gender", "gender can only be Male, Female, or Others")
     .isString()
-    .matches(/^(male|female|others)$/),
+    .matches(/^(Male|Female|Others)$/),
 ];
 
 module.exports = { validateUserSettings, validateUpdateUserDetails };

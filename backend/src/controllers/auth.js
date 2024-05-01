@@ -104,7 +104,7 @@ const deleteOneUser = async (req, res) => {
 
     const result = await pool.query(
       `
-      DELETE FROM users
+      DELETE FROM user
       WHERE user_id = $1
 `,
       [user_id]
@@ -141,7 +141,7 @@ const login = async (req, res) => {
       user.user_password
     );
     if (!result) {
-      console.error("Email or password is incorrect");
+      console.error("Username or password is incorrect");
       return res.status(401).json({ status: "error", msg: "Login failed" });
     }
 
@@ -158,7 +158,7 @@ const login = async (req, res) => {
     await pool.query(updateLastOnlineQuery, [user.user_id]);
 
     const access = jwt.sign(claims, process.env.ACCESS_SECRET, {
-      expiresIn: "20m",
+      expiresIn: "60m",
       jwtid: uuidv4(),
     });
 
