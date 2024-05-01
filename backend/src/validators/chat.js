@@ -18,6 +18,20 @@ const validateBodyInPost = [
     min: 1,
     max: 1000,
   }),
+  body(
+    "category",
+    "Category must have a minimum of 1 and maximum of 1000 characters"
+  ).isLength({
+    min: 1,
+    max: 24,
+  }),
+  body(
+    "sub_category",
+    "Sub-category must have a minimum of 1 and maximum of 1000 characters"
+  ).isLength({
+    min: 1,
+    max: 24,
+  }),
 ];
 
 module.exports = {

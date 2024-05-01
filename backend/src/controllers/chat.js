@@ -4,7 +4,8 @@ const pool = require("../db/db");
 const createUserPost = async (req, res) => {
   try {
     const user_id = req.params.user_id;
-    const { post_title, post_desc, post_img } = req.body;
+    const { post_title, post_desc, post_img, category, sub_category } =
+      req.body;
 
     // Check if the user creating the post is the same as the logged-in user
     if (user_id !== req.decoded.loggedInId) {
@@ -30,13 +31,21 @@ const createUserPost = async (req, res) => {
     // creating post with image vs no image
     if (post_img) {
       newPostQuery = await pool.query(
-        "INSERT INTO post (user_id, chat_settings_id, post_title, post_desc, post_img, post_date) VALUES ($1, $2, $3, $4, $5, CURRENT_DATE) RETURNING post_id",
-        [user_id, chatSettingsId, post_title, post_desc, post_img]
+        "INSERT INTO post (user_id, chat_settings_id, post_title, post_desc, post_img, post_date, category, sub_category) VALUES ($1, $2, $3, $4, $5, CURRENT_DATE, $6, $7) RETURNING post_id",
+        [
+          user_id,
+          chatSettingsId,
+          post_title,
+          post_desc,
+          post_img,
+          category,
+          sub_category,
+        ]
       );
     } else {
       newPostQuery = await pool.query(
-        "INSERT INTO post (user_id, chat_settings_id, post_title, post_desc, post_date) VALUES ($1, $2, $3, $4, CURRENT_DATE) RETURNING post_id",
-        [user_id, chatSettingsId, post_title, post_desc]
+        "INSERT INTO post (user_id, chat_settings_id, post_title, post_desc, post_date, category, sub_category) VALUES ($1, $2, $3, $4, CURRENT_DATE, $5, $6) RETURNING post_id",
+        [user_id, chatSettingsId, post_title, post_desc, category, sub_category]
       );
     }
 

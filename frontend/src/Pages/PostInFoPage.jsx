@@ -11,6 +11,8 @@ const PostInFoPage = () => {
   const [postTitle, setPostTitle] = useState("");
   const [postDesc, setPostDesc] = useState("");
   const [postImg, setPostImg] = useState("");
+  const [category, setCategory] = useState("");
+  const [sub_category, setSub_category] = useState("");
 
   const CreateUserPost = async () => {
     try {
@@ -18,7 +20,13 @@ const PostInFoPage = () => {
       const res = await fetchData(
         `/chat/${userCtx.userId}/post`,
         "PUT",
-        { post_title: postTitle, post_desc: postDesc, post_img: postImg },
+        {
+          post_title: postTitle,
+          post_desc: postDesc,
+          post_img: postImg,
+          category: category,
+          sub_category: sub_category,
+        },
         userCtx.accessToken
       );
 
@@ -54,6 +62,18 @@ const PostInFoPage = () => {
           value={postDesc}
           onChange={(e) => setPostDesc(e.target.value)}
           placeholder="Type your description here"
+        />
+        <input
+          type="text"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          placeholder="Type your category here"
+        />
+        <input
+          type="text"
+          value={sub_category}
+          onChange={(e) => setSub_category(e.target.value)}
+          placeholder="Type your sub_category here"
         />
         <input
           type="file"
