@@ -104,9 +104,9 @@ const deleteOneUser = async (req, res) => {
 
     const result = await pool.query(
       `
-      DELETE FROM user
+      DELETE FROM users
       WHERE user_id = $1
-`,
+    `,
       [user_id]
     );
 

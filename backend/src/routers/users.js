@@ -6,7 +6,7 @@ const {
   deleteUserCategory,
   getUserByUserId,
 } = require("../controllers/users");
-const { authUser, authAdmin } = require("../middleware/auth");
+const { authUser } = require("../middleware/auth");
 const {
   validateUserSettings,
   validateUpdateUserDetails,

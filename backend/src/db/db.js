@@ -1,6 +1,5 @@
 const { Pool } = require("pg");
 
-//import db parameters from .env file
 const pool = new Pool({
   user: process.env.DB_USER,
   host: process.env.DB_HOST,
