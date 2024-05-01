@@ -8,7 +8,7 @@ const AdminUserControl = () => {
   const userCtx = useContext(UserContext);
   const [error, setError] = useState("");
 
-  const getAllUserPosts = async () => {
+  const getAllUsers = async () => {
     try {
       setError("");
       const res = await fetchData(
@@ -20,17 +20,43 @@ const AdminUserControl = () => {
       if (res.ok) {
         setUser(res.data);
       } else {
-        setError("Error fetching posts");
+        setError("Error fetching users");
       }
     } catch (error) {
-      setError("Error fetching posts");
+      setError("Error fetching users");
       console.error(error);
     }
   };
 
   useEffect(() => {
-    getAllUserPosts();
+    getAllUsers();
   }, [userCtx.accessToken]);
+
+  const refreshUser = async () => {
+    await getAllUsers();
+  };
+
+  const handleDelete = async (userId) => {
+    try {
+      setError("");
+      const res = await fetchData(
+        `/auth/users/${userId}`,
+        "DELETE",
+        undefined,
+        userCtx.accessToken
+      );
+      if (res.ok) {
+        console.log("User deleted successfully");
+        refreshUser();
+      } else {
+        setError("Error deleting user");
+        console.error(error);
+      }
+    } catch (error) {
+      setError("Error deleting user");
+      console.error(error);
+    }
+  };
 
   return (
     <>
@@ -55,11 +81,16 @@ const AdminUserControl = () => {
                   : "No profile picture"}
               </p>
               <p>Admin: {user.is_admin ? "yes" : "no"}</p>
+              {!user.is_admin && (
+                <button onClick={() => handleDelete(user.user_id)}>
+                  Delete
+                </button>
+              )}
             </li>
           ))}
         </ul>
       ) : (
-        <div>{error ? error : "No posts found"}</div>
+        <div>{error ? error : "No user found"}</div>
       )}
     </>
   );
