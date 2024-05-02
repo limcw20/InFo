@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import useFetch from "../Hooks/useFetch";
 import UserContext from "../Context/user";
 import AddCategorySettings from "./AddCategorySettings";
+import styles from "../Pages/SettingsPage.module.css";
 
 const CategorySettings = () => {
   const fetchData = useFetch();
@@ -63,9 +64,12 @@ const CategorySettings = () => {
         <ul>
           {categories.map((userCategory) => (
             <li key={userCategory.user_settings_id}>
-              <p>{userCategory.category}</p>
-              <p>{userCategory.sub_category}</p>
+              <p className={styles.header2}>Category</p>
+              <p className={styles.p2}>{userCategory.category}</p>
+              <p className={styles.header2}>Sub-category</p>
+              <p className={styles.p2}>{userCategory.sub_category}</p>
               <button
+                className={styles.button2}
                 onClick={() => handleDelete(userCategory.user_settings_id)}
               >
                 Delete

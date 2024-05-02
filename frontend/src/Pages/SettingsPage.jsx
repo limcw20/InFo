@@ -4,6 +4,7 @@ import UserContext from "../Context/user";
 import { useParams } from "react-router-dom";
 import EditUserInfo from "../Components/EditUserInfo";
 import CategorySettings from "../Components/CategorySettings";
+import styles from "./SettingsPage.module.css";
 
 const SettingsPage = () => {
   const fetchData = useFetch();
@@ -75,17 +76,23 @@ const SettingsPage = () => {
   };
 
   return (
-    <>
-      <div className="settings-page">
+    <div className={styles.background}>
+      <div className={styles.list}>
         {userInfo && !isEditing && (
-          <>
-            <p>Username: {userInfo.username}</p>
-            <p>First Name: {userInfo.first_name}</p>
-            <p>Last Name: {userInfo.last_name}</p>
-            <p>Nickname: {userInfo.nickname}</p>
-            <p>Gender: {userInfo.gender}</p>
-            <button onClick={() => setIsEditing(true)}>Edit</button>
-          </>
+          <div>
+            <p className={styles.header}>User Details</p>
+            <p className={styles.p}>Username: {userInfo.username}</p>
+            <p className={styles.p}>First Name: {userInfo.first_name}</p>
+            <p className={styles.p}>Last Name: {userInfo.last_name}</p>
+            <p className={styles.p}>Nickname: {userInfo.nickname}</p>
+            <p className={styles.p}>Gender: {userInfo.gender}</p>
+            <button
+              className={styles.button}
+              onClick={() => setIsEditing(true)}
+            >
+              Edit
+            </button>
+          </div>
         )}
         {userInfo && isEditing && (
           <EditUserInfo
@@ -97,7 +104,7 @@ const SettingsPage = () => {
         {error && <p className="error-message">{error}</p>}
       </div>
       <CategorySettings></CategorySettings>
-    </>
+    </div>
   );
 };
 

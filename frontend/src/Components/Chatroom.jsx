@@ -4,6 +4,7 @@ import UserContext from "../Context/user";
 import { useParams } from "react-router-dom";
 import ChatroomResponse from "./ChatroomResponse";
 import ChatRoomUserList from "./ChatRoomUserList";
+import styles from "./Chatroom.module.css";
 
 const Chatroom = () => {
   const fetchData = useFetch();
@@ -64,24 +65,25 @@ const Chatroom = () => {
   };
 
   return (
-    <>
-      User List:
-      <ChatRoomUserList post_id={post_id} />
+    <div className={styles.background}>
       {posts && posts.post && (
-        <>
-          <h1>{posts.post.post_title}:</h1>
-          <h3>{posts.post.post_desc}</h3>
-          <img src={posts.post.post_img} />
-          <p>{posts.post.post_date}</p>
-          <p>{posts.post.category}</p>
-          <p>{posts.post.sub_category}</p>
+        <div className={styles.container}>
+          <img className={styles.img} src={posts.post.post_img} />
+          <h1 className={styles.header}>{posts.post.post_title}:</h1>
+          <h3 className={styles.p}>{posts.post.post_desc}</h3>
+          <p className={styles.p}>{posts.post.post_date}</p>
+          <p className={styles.p}>{posts.post.category}</p>
+          <p className={styles.p}>{posts.post.sub_category}</p>
           {Array.isArray(posts.responses) && posts.responses.length > 0 ? (
             <ul>
               {posts.responses.map((response) => (
                 <li key={response.response_id}>
-                  <img src={response.response_img} />
-                  <h3>{response.response_desc}</h3>
-                  <button onClick={() => handleDelete(response.response_id)}>
+                  <img className={styles.img} src={response.response_img} />
+                  <h3 className={styles.header}>{response.response_desc}</h3>
+                  <button
+                    className={styles.button}
+                    onClick={() => handleDelete(response.response_id)}
+                  >
                     Delete
                   </button>
                   <p>{response.response_date}</p>
@@ -91,12 +93,16 @@ const Chatroom = () => {
           ) : (
             <div>No response yet found</div>
           )}
-
           <ChatroomResponse refreshPost={refreshPost}></ChatroomResponse>
-        </>
+          <br />
+          <br />
+          <br />
+          <p className={styles.header2}>User List:</p>
+          <ChatRoomUserList post_id={post_id} />
+        </div>
       )}
       {error && <div>{error}</div>}
-    </>
+    </div>
   );
 };
 

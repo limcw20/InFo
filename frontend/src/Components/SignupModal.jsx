@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import ReactDom from "react-dom";
 import useFetch from "../Hooks/useFetch";
-import styles from "./SignupModal.module.css";
+import styles from "./SignUpModal.module.css";
 
 const SignupForm = (props) => {
   const fetchData = useFetch();

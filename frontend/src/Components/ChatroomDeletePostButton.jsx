@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import useFetch from "../Hooks/useFetch";
 import UserContext from "../Context/user";
 import { useNavigate, useParams } from "react-router-dom";
+import styles from "./Chatroom.module.css";
 
 const ChatroomDeletePostButton = ({ is_superuser }) => {
   const fetchData = useFetch();
@@ -34,7 +35,11 @@ const ChatroomDeletePostButton = ({ is_superuser }) => {
 
   return (
     <div>
-      {is_superuser && <button onClick={handleDeletePost}>Delete Post</button>}
+      {is_superuser && (
+        <button className={styles.button} onClick={handleDeletePost}>
+          Delete Post
+        </button>
+      )}
       {error && <div>{error}</div>}
     </div>
   );

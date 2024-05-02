@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import useFetch from "../Hooks/useFetch";
 import UserContext from "../Context/user";
 import { useParams } from "react-router-dom";
+import styles from "./Chatroom.module.css";
 
 const ChatroomResponse = (props) => {
   const fetchData = useFetch();
@@ -69,12 +70,15 @@ const ChatroomResponse = (props) => {
     <>
       <form onSubmit={handleSubmit}>
         <input
+          className={styles.p}
           type="text"
           value={responseDesc}
           onChange={(e) => setResponseDesc(e.target.value)}
           placeholder="Type your response here"
         />
-        <button type="submit">Submit</button>
+        <button className={styles.button} type="submit">
+          Submit
+        </button>
         {error && <div>{error}</div>}
         <input
           label="image"
@@ -85,7 +89,7 @@ const ChatroomResponse = (props) => {
         <button
           type="button"
           id="upload_image_widget"
-          className="cloudinary-button"
+          className={`${styles.cloudinary_button} cloudinary-button`}
         >
           Upload Picture
         </button>

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import useFetch from "../Hooks/useFetch";
 import UserContext from "../Context/user";
 import ChatroomDeletePostButton from "./ChatroomDeletePostButton";
-
+import styles from "./Chatroom.module.css";
 const ChatRoomUserList = (props) => {
   const fetchData = useFetch();
   const [users, setUsers] = useState([]);
@@ -62,16 +62,19 @@ const ChatRoomUserList = (props) => {
   };
 
   return (
-    <>
+    <div className={styles.container}>
       {users.length > 0 ? (
         <ul>
           {users.map((user) => (
             <li key={user.user_id}>
-              <p>{user.nickname}</p>
-              <p>{user.is_superuser ? "Host" : ""}</p>
+              <p className={styles.p}>{user.nickname}</p>
+              <p className={styles.p}>{user.is_superuser ? "Host" : ""}</p>
 
               {!user.is_superuser && (
-                <button onClick={() => handleDelete(user.user_id)}>
+                <button
+                  className={styles.button}
+                  onClick={() => handleDelete(user.user_id)}
+                >
                   Delete
                 </button>
               )}
@@ -83,7 +86,7 @@ const ChatRoomUserList = (props) => {
       ) : (
         <div>{error ? error : "No posts found"}</div>
       )}
-    </>
+    </div>
   );
 };
 

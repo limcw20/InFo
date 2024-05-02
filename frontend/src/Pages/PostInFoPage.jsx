@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import useFetch from "../Hooks/useFetch";
 import UserContext from "../Context/user";
 import { useNavigate } from "react-router-dom";
+import styles from "./PostInFoPage.module.css";
 
 const PostInFoPage = () => {
   const fetchData = useFetch();
@@ -77,49 +78,63 @@ const PostInFoPage = () => {
   }, []);
 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
+    <div className={styles.background}>
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <p className={styles.h1}> What do you want to discuss about?</p>
+        <br />
+        <br />
+        <br />
+        <p className={styles.p}>Post Title</p>
         <input
+          className={styles.input}
           type="text"
           value={postTitle}
           onChange={(e) => setPostTitle(e.target.value)}
           placeholder="Type your title here"
         />
+        <p className={styles.p}>Post Description</p>
         <input
+          className={styles.input}
           type="text"
           value={postDesc}
           onChange={(e) => setPostDesc(e.target.value)}
           placeholder="Type your description here"
         />
+        <p className={styles.p}>Category</p>
         <input
+          className={styles.input}
           type="text"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
           placeholder="Type your category here"
         />
+        <p className={styles.p}>Sub-Category</p>
         <input
+          className={styles.input}
           type="text"
           value={sub_category}
           onChange={(e) => setSub_category(e.target.value)}
           placeholder="Type your sub_category here"
         />
 
-        {error && <div>{error}</div>}
-        {/* Display the image URL in a paragraph element */}
-        <p>Image URL: {postImg}</p>
-        <input type="hidden" value={postImg} />
+        <p className={styles.p}>Image URL</p>
+        <input type="text" value={postImg} className={styles.input} />
         <button
           type="button"
           id="upload_image_widget"
-          className="cloudinary-button"
+          className={`${styles.cloudinary_button} cloudinary-button`}
         >
-          Upload Picture
+          Upload Image Here
         </button>
-
-        <button type="submit">Submit</button>
-        {error && <div>{error}</div>}
+        <br />
+        <button className={styles.submit_button} type="submit">
+          Post InFo
+        </button>
+        <br />
+        <br />
+        {error && <div className={styles.p}>{error}</div>}
       </form>
-    </>
+    </div>
   );
 };
 

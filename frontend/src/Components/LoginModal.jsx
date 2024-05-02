@@ -3,7 +3,7 @@ import ReactDom from "react-dom";
 import useFetch from "../Hooks/useFetch";
 import UserContext from "../Context/user";
 import { jwtDecode } from "jwt-decode";
-import styles from "./SignupModal.module.css";
+import styles from "./SignUpModal.module.css";
 
 const LoginForm = (props) => {
   const userCtx = useContext(UserContext);

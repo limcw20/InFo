@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styles from "../Pages/SettingsPage.module.css";
 
 const EditUserInfo = ({ userInfo, onSave, onCancel }) => {
   const [nickname, setNickname] = useState(userInfo.nickname);
@@ -33,34 +34,37 @@ const EditUserInfo = ({ userInfo, onSave, onCancel }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <label>
+      <label className={styles.header3}>
         Nickname:
         <input
+          className={styles.p}
           type="text"
           name="nickname"
           value={nickname}
           onChange={handleChange}
         />
       </label>
-      <label>
+      <label className={styles.header3}>
         First Name:
         <input
+          className={styles.p}
           type="text"
           name="first_name"
           value={firstName}
           onChange={handleChange}
         />
       </label>
-      <label>
+      <label className={styles.header3}>
         Last Name:
         <input
+          className={styles.p}
           type="text"
           name="last_name"
           value={lastName}
           onChange={handleChange}
         />
       </label>
-      <label>
+      <label className={styles.header3}>
         Gender:
         <select name="gender" value={gender} onChange={handleChange}>
           <option value="Male">Male</option>
@@ -68,8 +72,10 @@ const EditUserInfo = ({ userInfo, onSave, onCancel }) => {
           <option value="Others">Others</option>
         </select>
       </label>
-      <button type="submit">Save</button>
-      <button type="button" onClick={onCancel}>
+      <button className={styles.button} type="submit">
+        Save
+      </button>
+      <button className={styles.button} type="button" onClick={onCancel}>
         Cancel
       </button>
     </form>

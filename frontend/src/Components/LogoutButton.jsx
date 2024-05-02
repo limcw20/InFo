@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import useFetch from "../Hooks/useFetch";
 import UserContext from "../Context/user";
+import styles from "./LogoutButton.module.css";
 
 const LogoutButton = () => {
   const fetchData = useFetch();
@@ -28,7 +29,9 @@ const LogoutButton = () => {
   };
   return (
     <>
-      <button onClick={() => Logout()}>Log Out</button>
+      <button className={styles.logout} onClick={() => Logout()}>
+        Log Out
+      </button>
     </>
   );
 };

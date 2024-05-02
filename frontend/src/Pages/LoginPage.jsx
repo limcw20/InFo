@@ -18,14 +18,13 @@ const LandingPage = (props) => {
     <div className={styles.pageBackground}>
       <div className={styles.content}>
         <div className={styles.title}>InFo</div>
+        <div className={styles.subtitle}>Internet Forum meets Matchmaking</div>
 
-        <div className={styles.twoButtons}>
-          <div className={styles.login} onClick={loginModal}>
-            Login
-          </div>
-          <div className={styles.signup} onClick={signupModal}>
-            Sign Up
-          </div>
+        <div className={styles.login} onClick={loginModal}>
+          Login
+        </div>
+        <div className={styles.signup} onClick={signupModal}>
+          Sign Up
         </div>
 
         {showLoginModal && (

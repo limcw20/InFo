@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import DiscoverPassButton from "./DiscoverPassButton";
 import UserContext from "../Context/user";
 import DiscoverJoinButton from "./DiscoverJoinButton";
+import styles from "./Discover.module.css";
 
 const Discover = () => {
   const fetchData = useFetch();
@@ -71,14 +72,14 @@ const Discover = () => {
     joinPost();
   };
   return (
-    <>
-      <h1>Random Post:</h1>
-      <h3>{posts.post_title}</h3>
-      <img src={posts.post_img} />
-      <p>{posts.post_desc}</p>
+    <div className={styles.container}>
+      <h1 className={styles.header}>Random Post:</h1>
+      <img className={styles.img} src={posts.post_img} />
+      <h3 className={styles.header2}>{posts.post_title}</h3>
+      <p className={styles.p}>{posts.post_desc}</p>
       <DiscoverPassButton handleClick={handleGetPost} />
       <DiscoverJoinButton handleJoinClick={handleJoinPost} />
-    </>
+    </div>
   );
 };
 

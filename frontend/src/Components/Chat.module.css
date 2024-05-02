@@ -1,13 +1,13 @@
 .listContainer {
-  margin: 20px;
-  display: flex;
-  flex-direction: column;
+  display: grid;
   align-items: center;
+  justify-content: center;
+  font-size: 18px;
 }
 
 .listList {
-  font-size: 24px;
-  color: #333;
+  font-size: 30px;
+  color: #ffffff;
   margin-bottom: 10px;
   text-align: center;
 }
@@ -15,31 +15,34 @@
 .listItems {
   list-style-type: none;
   padding: 0;
-  width: 100%;
-  max-width: 600px; /* Adjust max-width according to your design */
+  width: 700px;
+  margin-top: -500px;
 }
 
 .listItems li {
-  border: 1px solid #ccc;
+  background-color: #f5f5f5;
   border-radius: 5px;
   padding: 10px;
   margin-bottom: 10px;
+  width: 700px;
 }
 
 .listItems li h3 {
   margin: 0;
-  font-size: 20px;
-  color: #007bff;
+  font-size: 24px;
+  color: #465957;
 }
 
 .listItems li p {
   margin-top: 5px;
   margin-bottom: 10px;
+  color: #465957;
 }
 
 .listItems li a {
-  color: #007bff;
+  color: #4c5b61;
   text-decoration: none;
+  margin-left: 550px;
 }
 
 .listItems li a:hover {
