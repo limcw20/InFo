@@ -71,6 +71,7 @@ const Chatroom = () => {
         <>
           <h1>{posts.post.post_title}:</h1>
           <h3>{posts.post.post_desc}</h3>
+          <img src={posts.post.post_img} />
           <p>{posts.post.post_date}</p>
           <p>{posts.post.category}</p>
           <p>{posts.post.sub_category}</p>
@@ -78,6 +79,7 @@ const Chatroom = () => {
             <ul>
               {posts.responses.map((response) => (
                 <li key={response.response_id}>
+                  <img src={response.response_img} />
                   <h3>{response.response_desc}</h3>
                   <button onClick={() => handleDelete(response.response_id)}>
                     Delete

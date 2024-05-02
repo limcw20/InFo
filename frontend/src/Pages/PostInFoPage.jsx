@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import useFetch from "../Hooks/useFetch";
 import UserContext from "../Context/user";
 import { useNavigate } from "react-router-dom";
@@ -10,9 +10,10 @@ const PostInFoPage = () => {
   const [error, setError] = useState("");
   const [postTitle, setPostTitle] = useState("");
   const [postDesc, setPostDesc] = useState("");
-  const [postImg, setPostImg] = useState("");
   const [category, setCategory] = useState("");
   const [sub_category, setSub_category] = useState("");
+  const imageUploadRef = useRef(null);
+  const [postImg, setPostImg] = useState("");
 
   const CreateUserPost = async () => {
     try {
@@ -48,6 +49,33 @@ const PostInFoPage = () => {
     CreateUserPost();
   };
 
+  useEffect(() => {
+    if (!imageUploadRef.current) {
+      const cloudinaryWidgetImage = window.cloudinary.createUploadWidget(
+        {
+          cloudName: "dedccruzp",
+          uploadPreset: "cjdht8ty",
+        },
+        (error, result) => {
+          if (!error && result && result.event === "success") {
+            console.log("Image URL:", result.info.secure_url); // Debugging line
+            setPostImg(result.info.secure_url);
+          }
+        }
+      );
+      const uploadButton = document.getElementById("upload_image_widget");
+      uploadButton.addEventListener(
+        "click",
+        (event) => {
+          event.stopPropagation();
+          cloudinaryWidgetImage.open();
+        },
+        false
+      );
+      imageUploadRef.current = uploadButton;
+    }
+  }, []);
+
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -75,12 +103,19 @@ const PostInFoPage = () => {
           onChange={(e) => setSub_category(e.target.value)}
           placeholder="Type your sub_category here"
         />
-        <input
-          type="file"
-          value={postImg}
-          onChange={(e) => setPostImg(e.target.value)}
-          placeholder="Upload image here"
-        />
+
+        {error && <div>{error}</div>}
+        {/* Display the image URL in a paragraph element */}
+        <p>Image URL: {postImg}</p>
+        <input type="hidden" value={postImg} />
+        <button
+          type="button"
+          id="upload_image_widget"
+          className="cloudinary-button"
+        >
+          Upload Picture
+        </button>
+
         <button type="submit">Submit</button>
         {error && <div>{error}</div>}
       </form>

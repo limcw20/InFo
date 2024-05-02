@@ -74,6 +74,7 @@ const Discover = () => {
     <>
       <h1>Random Post:</h1>
       <h3>{posts.post_title}</h3>
+      <img src={posts.post_img} />
       <p>{posts.post_desc}</p>
       <DiscoverPassButton handleClick={handleGetPost} />
       <DiscoverJoinButton handleJoinClick={handleJoinPost} />
