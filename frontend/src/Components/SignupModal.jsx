@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import ReactDom from "react-dom";
 import useFetch from "../Hooks/useFetch";
-import styles from "./SignUpModal.module.css";
+import styles from "./SignupModal.module.css";
 
 const SignupForm = (props) => {
   const fetchData = useFetch();
@@ -67,29 +67,56 @@ const SignupForm = (props) => {
             }}
           ></i>
         </div>
-        <h1>Sign Up</h1>
-        <div>
+        <h1 className={styles.title}>Sign Up</h1>
+        <div className={styles.inputField}>
           <input
+            className={styles.userNameInput}
             type="text"
             placeholder="First Name"
             ref={firstNameRef}
           ></input>
-          <input type="text" placeholder="Last Name" ref={lastNameRef}></input>
-          <input type="text" placeholder="Username" ref={usernameRef}></input>
-          <input type="text" placeholder="Nickname" ref={nicknameRef}></input>
           <input
+            className={styles.userNameInput}
+            type="text"
+            placeholder="Last Name"
+            ref={lastNameRef}
+          ></input>
+          <input
+            className={styles.userNameInput}
+            type="text"
+            placeholder="Username"
+            ref={usernameRef}
+          ></input>
+          <input
+            className={styles.userNameInput}
+            type="text"
+            placeholder="Nickname"
+            ref={nicknameRef}
+          ></input>
+          <input
+            className={styles.passwordInput}
             type="password"
             placeholder="Password"
             ref={passwordRef}
           ></input>
           <input
+            className={styles.passwordInput}
             type="password"
             placeholder="Password"
             ref={passwordConfirmRef}
           ></input>
         </div>
-
-        <button onClick={register}>SIGN UP</button>
+        <div className={styles.buttonContainer}>
+          <button
+            className={styles.LoginButton}
+            onClick={() => props.setShowSignupModal(false)}
+          >
+            Close
+          </button>
+          <button className={styles.LoginButton} onClick={register}>
+            SIGN UP
+          </button>
+        </div>
         {accCreated && <div>account created</div>}
         {allFields && <div> Please Fill up all fields!</div>}
         {passwordMatch && <div>Passwords do not match!</div>}

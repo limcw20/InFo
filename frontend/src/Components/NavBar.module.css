@@ -1,17 +1,41 @@
-.Navbar {
-  background-color: #68a186;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  padding: 0 40px;
-  align-items: center;
-  height: 100px;
-  width: 100%;
+.sideNavBar {
+  position: fixed; /* Fixed position to overlay on top of the main content */
+  top: 0;
+  left: 0;
+  width: 250px; /* Full width */
+  z-index: 1000; /* High z-index to ensure it overlays other content */
+  display: grid;
+  grid-template-columns: 250px auto 1fr;
+  grid-template-rows: 100vh;
 }
 
-.Navbar h1 {
-  font-family: "Cedarville Cursive", cursive;
-  font-weight: 400;
-  font-style: normal;
-  color: white;
+.sideBar {
+  background-color: #4c5b61;
+  color: #ffffff;
+  padding: 20px;
+}
+
+.content {
+  padding: 20px;
+  color: #000000;
+  grid-column: 1 / 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+}
+
+.content ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.content ul li {
+  margin-bottom: 10px;
+}
+
+.content ul li a {
+  text-decoration: none;
+  color: #000000;
 }

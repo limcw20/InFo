@@ -1,3 +1,137 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.modal {
+  background: rgba(255, 255, 255, 0.9);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30%;
+  height: 70%;
+  z-index: 100;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border-radius: 50px;
+  align-items: center;
+}
+
+.title {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.inputField {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userNameInput {
+  margin-bottom: 20px;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  font-size: 16px;
+  background-color: transparent;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.userNameInput:focus {
+  border-color: #101112;
+}
+
+.userNameInput::placeholder {
+  color: #2e2b2b;
+}
+
+.passwordInput {
+  outline: none;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  font-size: 16px;
+  background-color: transparent;
+  outline: none;
+  transition: border-color 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.passwordInput:focus {
+  border-color: #101112;
+}
+
+.passwordInput::placeholder {
+  color: #2e2b2b;
+}
+
+.LoginButton {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: transparent;
+  color: #929090;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.8s ease;
+  margin-right: 25px;
+}
+
+.LoginButton:hover {
+  background-color: #b3b9bf;
+}
+
+.LoginButton:focus {
+  outline: none;
+}
+
+.LoginButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.CloseButton {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: transparent;
+  color: #929090;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.8s ease;
+  margin-left: 25px;
+}
+
+.CloseButton:hover {
+  background-color: #b3b9bf;
+}
+
+.CloseButton:focus {
+  outline: none;
+}
+
+.CloseButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+}
+
 .cross {
   position: absolute;
   top: 20px;

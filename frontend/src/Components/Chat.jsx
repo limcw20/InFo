@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import useFetch from "../Hooks/useFetch";
-
+import styles from "./Chat.module.css";
 import UserContext from "../Context/user";
 import { Link } from "react-router-dom";
 
@@ -36,10 +36,10 @@ const Chat = (props) => {
   }, [user_id, userCtx.accessToken]); // Make sure to include user_id and accessToken in the dependency array
 
   return (
-    <>
-      <h1>Posts you participate in:</h1>
+    <div className={styles.listContainer}>
+      <h1 className={styles.listList}>Posts you participate in:</h1>
       {posts.length > 0 ? (
-        <ul>
+        <ul className={styles.listItems}>
           {posts.map((post) => (
             <li key={post.post_id}>
               <h3>{post.post_title}</h3>
@@ -51,7 +51,7 @@ const Chat = (props) => {
       ) : (
         <div>{error ? error : "No posts found"}</div>
       )}
-    </>
+    </div>
   );
 };
 

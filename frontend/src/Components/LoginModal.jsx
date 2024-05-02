@@ -1,9 +1,9 @@
 import React, { useContext, useState } from "react";
 import ReactDom from "react-dom";
-import styles from "./SignUpModal.module.css";
 import useFetch from "../Hooks/useFetch";
 import UserContext from "../Context/user";
 import { jwtDecode } from "jwt-decode";
+import styles from "./SignupModal.module.css";
 
 const LoginForm = (props) => {
   const userCtx = useContext(UserContext);
@@ -38,8 +38,8 @@ const LoginForm = (props) => {
   };
 
   return (
-    <div>
-      <div>
+    <div className={styles.backdrop}>
+      <div className={styles.modal}>
         <div className={styles.crossContainer}>
           <i
             className={`bi bi-x-circle ${styles.cross}`}
@@ -48,11 +48,12 @@ const LoginForm = (props) => {
             }}
           ></i>
         </div>
-        <h1>Login</h1>
-        <div>
+        <h1 className={styles.title}>Login</h1>
+        <div className={styles.inputField}>
           <input
             type="text"
             placeholder="Username"
+            className={styles.userNameInput}
             onChange={(e) => setUsername(e.target.value)}
           ></input>
           <input
@@ -63,9 +64,17 @@ const LoginForm = (props) => {
           ></input>
         </div>
 
-        <button className={styles.LoginButton} onClick={login}>
-          Login
-        </button>
+        <div className={styles.buttonContainer}>
+          <button
+            className={styles.LoginButton}
+            onClick={() => props.setShowLoginModal(false)}
+          >
+            Close
+          </button>
+          <button className={styles.CloseButton} onClick={login}>
+            Login
+          </button>
+        </div>
       </div>
     </div>
   );
