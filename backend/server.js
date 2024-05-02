@@ -1,6 +1,4 @@
 require("dotenv").config();
-const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
-const multer = require("multer");
 const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
@@ -17,41 +15,6 @@ const limiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
 });
-
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
-
-const accessKey = process.env.AWS_ACCESS_KEY;
-const secretAccessKey = process.env.AWS_SECRET_KEY;
-const region = process.env.AWS_REGION;
-const bucketName = process.env.AWS_BUCKET_NAME;
-
-const s3 = new S3Client({
-  credentials: {
-    accessKeyId: accessKey,
-    secretAccessKey: secretAccessKey,
-  },
-  region: region,
-});
-
-app.post(
-  "/aws/posts",
-  upload.single("image", async (req, res) => {
-    req.file.buffer;
-
-    const params = {
-      Bucket: bucketName,
-      Key: req.file.originalname,
-      Body: req.file.buffer,
-      ContentType: req.file.mimetype,
-    };
-
-    const command = new PutObjectCommand(params);
-    await s3.send(command);
-
-    res.send({});
-  })
-);
 
 app.use(cors());
 app.use(helmet());
