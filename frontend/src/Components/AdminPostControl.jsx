@@ -64,12 +64,12 @@ const AdminPostControl = () => {
         <ul>
           {posts.map((post) => (
             <li key={post.post_id}>
-              <p>{post.post_title}</p>
-              <p>{post.post_desc}</p>
-              <p>{post.post_img}</p>
-              <p>{post.post_date}</p>
-              <p>{post.username}</p>
-              <p>{post.nickname}</p>
+              <p>Post title: {post.post_title}</p>
+              <p>Post Description: {post.post_desc}</p>
+              <p>Post Image URL: {post.post_img}</p>
+              <p>Post Date: {post.post_date}</p>
+              <p>Post Username: {post.username}</p>
+              <p>Post Nickname: {post.nickname}</p>
               <button onClick={() => handleDelete(post.post_id)}>Delete</button>
               {/* Pass post_id to handleDelete */}
             </li>

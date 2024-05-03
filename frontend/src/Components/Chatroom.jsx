@@ -72,14 +72,14 @@ const Chatroom = () => {
           <h1 className={styles.header}>{posts.post.post_title}:</h1>
           <h3 className={styles.p}>{posts.post.post_desc}</h3>
           <p className={styles.p}>{posts.post.post_date}</p>
-          <p className={styles.p}>{posts.post.category}</p>
-          <p className={styles.p}>{posts.post.sub_category}</p>
+          <p className={styles.p}>category: {posts.post.category}</p>
+          <p className={styles.p}>sub-category: {posts.post.sub_category}</p>
           {Array.isArray(posts.responses) && posts.responses.length > 0 ? (
             <ul>
               {posts.responses.map((response) => (
                 <li key={response.response_id}>
                   <img className={styles.img} src={response.response_img} />
-                  <h3 className={styles.header}>{response.response_desc}</h3>
+                  <h3 className={styles.p}>{response.response_desc}</h3>
                   <button
                     className={styles.button}
                     onClick={() => handleDelete(response.response_id)}

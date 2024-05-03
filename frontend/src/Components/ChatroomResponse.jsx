@@ -70,7 +70,7 @@ const ChatroomResponse = (props) => {
     <>
       <form onSubmit={handleSubmit}>
         <input
-          className={styles.p}
+          className={styles.input}
           type="text"
           value={responseDesc}
           onChange={(e) => setResponseDesc(e.target.value)}

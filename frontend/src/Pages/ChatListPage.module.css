@@ -1,9 +1,9 @@
 .background {
   display: grid;
   grid-template-columns: 250px auto;
-  grid-template-rows: 110vh;
+  grid-template-rows: 150vh;
   background-color: #829191;
   margin-left: 200px;
   justify-content: center;
-  margin-top: -150px;
+  margin-top: -300px;
 }

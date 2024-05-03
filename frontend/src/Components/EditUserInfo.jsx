@@ -37,7 +37,7 @@ const EditUserInfo = ({ userInfo, onSave, onCancel }) => {
       <label className={styles.header3}>
         Nickname:
         <input
-          className={styles.p}
+          className={styles.input}
           type="text"
           name="nickname"
           value={nickname}
@@ -47,7 +47,7 @@ const EditUserInfo = ({ userInfo, onSave, onCancel }) => {
       <label className={styles.header3}>
         First Name:
         <input
-          className={styles.p}
+          className={styles.input}
           type="text"
           name="first_name"
           value={firstName}
@@ -57,7 +57,7 @@ const EditUserInfo = ({ userInfo, onSave, onCancel }) => {
       <label className={styles.header3}>
         Last Name:
         <input
-          className={styles.p}
+          className={styles.input}
           type="text"
           name="last_name"
           value={lastName}

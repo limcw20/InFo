@@ -1,16 +1,15 @@
 .background {
   display: grid;
   grid-template-columns: 250px auto;
-  grid-template-rows: 101vh;
+  grid-template-rows: 115vh;
   background-color: #829191;
   margin-left: 250px;
   justify-content: center;
-  margin-top: -120px;
+  margin-top: -130px;
 }
 
 .list {
   display: grid;
-  margin-top: 250px;
   height: 15px;
 }
 
@@ -33,7 +32,7 @@
   text-decoration: none;
 }
 .header3 {
-  margin-top: 20px;
+  margin-top: 200px;
   font-size: 20px;
   margin-left: 10px;
   color: #ffffff;
@@ -53,7 +52,7 @@
   border: none;
   width: 100px;
   height: 30px;
-  margin-top: 30px;
+  margin-top: 50px;
   margin-left: 10px;
 }
 
