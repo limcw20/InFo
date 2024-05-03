@@ -68,7 +68,7 @@ const ChatroomResponse = (props) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} id="upload_image_widget">
         <input
           className={styles.input}
           type="text"
@@ -88,7 +88,7 @@ const ChatroomResponse = (props) => {
         ></input>
         <button
           type="button"
-          id="upload_image_widget"
+          form="upload_image_widget"
           className={`${styles.cloudinary_button} cloudinary-button`}
         >
           Upload Picture
