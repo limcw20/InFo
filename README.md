@@ -35,6 +35,12 @@
 ![GA Capstone Project](https://github.com/limcw20/InFo/assets/157563230/97d0486a-5cc3-4d96-b0f0-855a6106e9fd)
 
 
+## Current State of the App
+
+### As of now, the app functions well as intended. However, a rework of the look will be implemented, along with some extra features.
+
+![image](https://github.com/limcw20/InFo/assets/157563230/d498aa4a-a949-4b59-ab51-3ebbd919f038)
+
 
 ## Getting Started
 
@@ -85,7 +91,7 @@ WHERE username = 'youradminusernamehere';
 - Rework on outlook with CSS/Frameworks
 - Include chat settings feature (post visibility & max capacity)
 - Add search feature and only show posts with post visibility to public
-- Add 
+- Include user(host) renders such as "last online","status:online/offline", "top categories" shown on discover.
 
 
 
