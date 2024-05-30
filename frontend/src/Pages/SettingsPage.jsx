@@ -1,29 +1,24 @@
 import React, { useContext, useEffect, useState } from "react";
 import useFetch from "../Hooks/useFetch";
 import UserContext from "../Context/user";
-import { useParams } from "react-router-dom";
 import EditUserInfo from "../Components/EditUserInfo";
 import CategorySettings from "../Components/CategorySettings";
+import AddCategorySettings from "../Components/AddCategorySettings";
 import styles from "./SettingsPage.module.css";
 
 const SettingsPage = () => {
   const fetchData = useFetch();
   const userCtx = useContext(UserContext);
   const [userInfo, setUserInfo] = useState();
-  const [originalUserInfo, setOriginalUserInfo] = useState();
+  const [originalUserInfo, setOriginalUserInfo] = useState("");
   const [error, setError] = useState("");
   const [isEditing, setIsEditing] = useState(false);
-
-  let { user_id } = useParams();
-  if (!user_id) {
-    user_id = userCtx.userId;
-  }
 
   const getUserInfo = async () => {
     try {
       setError("");
       const res = await fetchData(
-        `/users/${user_id}`,
+        `/users/${userCtx.userId}`,
         "GET",
         undefined,
         userCtx.accessToken
@@ -43,14 +38,14 @@ const SettingsPage = () => {
 
   useEffect(() => {
     getUserInfo();
-  }, [userCtx.accessToken, user_id]);
+  }, [userCtx.accessToken]);
 
   const handleSaveUserInfo = async (updatedUserInfo) => {
     try {
       setError("");
       const { nickname, first_name, last_name, gender } = updatedUserInfo;
       const res = await fetchData(
-        `/users/${user_id}`,
+        `/users/${userCtx.userId}`,
         "PATCH",
         { nickname, first_name, last_name, gender },
         userCtx.accessToken
@@ -77,9 +72,9 @@ const SettingsPage = () => {
 
   return (
     <div className={styles.background}>
-      <div className={styles.list}>
+      <div className={styles.leftColumn}>
         {userInfo && !isEditing && (
-          <div>
+          <div className={styles.list}>
             <p className={styles.header}>User Details</p>
             <p className={styles.p}>Username: {userInfo.username}</p>
             <p className={styles.p}>First Name: {userInfo.first_name}</p>
@@ -101,9 +96,11 @@ const SettingsPage = () => {
             onCancel={handleCancelEdit}
           />
         )}
-        {error && <p className="error-message">{error}</p>}
+        {error && <p className={styles.error}>{error}</p>}
+        <div className={styles.rightColumn}>
+          <CategorySettings />
+        </div>
       </div>
-      <CategorySettings></CategorySettings>
     </div>
   );
 };

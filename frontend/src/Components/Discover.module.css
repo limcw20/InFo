@@ -1,13 +1,14 @@
 .container {
   display: grid;
-  margin-top: 300px;
   justify-content: center;
   align-content: center;
 }
+
 .p {
   color: #ffffff;
   font-size: 12px;
   padding: 10px;
+  border-radius: 5px;
 }
 
 .header {
@@ -15,11 +16,13 @@
   color: #ffffff;
   text-decoration: none;
 }
+
 .header2 {
   font-size: 21px;
   color: #ffffff;
   text-decoration: none;
 }
+
 .button {
   background-color: #465957;
   color: #ffffff;
@@ -27,12 +30,30 @@
   width: 150px;
   height: 60px;
   margin-top: 30px;
-  margin-right: 100px;
+  margin-right: 20px;
   font-size: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #3a4c59;
 }
 
 .img {
   max-height: 600px;
   max-width: 800px;
   object-fit: cover;
+}
+
+.textContainer {
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.textContainer h3,
+.textContainer p {
+  color: #333333;
 }

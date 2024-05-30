@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import useFetch from "../Hooks/useFetch";
 import UserContext from "../Context/user";
-import ChatroomDeletePostButton from "./ChatroomDeletePostButton";
 import styles from "./Chatroom.module.css";
+
 const ChatRoomUserList = (props) => {
   const fetchData = useFetch();
   const [users, setUsers] = useState([]);
@@ -23,10 +23,10 @@ const ChatRoomUserList = (props) => {
       if (res.ok) {
         setUsers(res.data);
       } else {
-        setError("Error fetching posts");
+        setError("Error fetching users");
       }
     } catch (error) {
-      setError("Error fetching posts");
+      setError("Error fetching users");
       console.error(error);
     }
   };
@@ -62,14 +62,14 @@ const ChatRoomUserList = (props) => {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.userListContainer}>
+      <h2 className={styles.header2}>User List:</h2>
       {users.length > 0 ? (
-        <ul>
+        <ul className={styles.userList}>
           {users.map((user) => (
-            <li key={user.user_id}>
-              <p className={styles.p}>{user.nickname}</p>
-              <p className={styles.p}>{user.is_superuser ? "Host" : ""}</p>
-
+            <li key={user.user_id} className={styles.userListItem}>
+              <p>{user.nickname}</p>
+              <p>{user.is_superuser ? "Host" : ""}</p>
               {!user.is_superuser && (
                 <button
                   className={styles.button}
@@ -78,13 +78,11 @@ const ChatRoomUserList = (props) => {
                   Delete
                 </button>
               )}
-
-              <ChatroomDeletePostButton is_superuser={user.is_superuser} />
             </li>
           ))}
         </ul>
       ) : (
-        <div>{error ? error : "No posts found"}</div>
+        <div>{error ? error : "No users found"}</div>
       )}
     </div>
   );

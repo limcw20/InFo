@@ -8,7 +8,7 @@ import styles from "./Chatroom.module.css";
 
 const Chatroom = () => {
   const fetchData = useFetch();
-  const [posts, setPosts] = useState([]); // Define state for posts
+  const [posts, setPosts] = useState([]);
   const userCtx = useContext(UserContext);
   const [error, setError] = useState("");
   const { post_id } = useParams();
@@ -38,7 +38,6 @@ const Chatroom = () => {
   }, [post_id, userCtx.accessToken]);
 
   const refreshPost = async () => {
-    // Perform data fetching again after response submission
     await getAllInfoFromPost();
   };
 
@@ -54,7 +53,7 @@ const Chatroom = () => {
 
       if (res.ok) {
         console.log("Response deleted successfully");
-        refreshPost(); // Refresh posts after deletion
+        refreshPost();
       } else {
         setError("Error deleting response");
       }
@@ -68,17 +67,25 @@ const Chatroom = () => {
     <div className={styles.background}>
       {posts && posts.post && (
         <div className={styles.container}>
-          <img className={styles.img} src={posts.post.post_img} />
+          {posts.post.post_img && (
+            <img className={styles.img} src={posts.post.post_img} alt="Post" />
+          )}
           <h1 className={styles.header}>{posts.post.post_title}:</h1>
           <h3 className={styles.p}>{posts.post.post_desc}</h3>
           <p className={styles.p}>{posts.post.post_date}</p>
-          <p className={styles.p}>category: {posts.post.category}</p>
-          <p className={styles.p}>sub-category: {posts.post.sub_category}</p>
+          <p className={styles.p}>Category: {posts.post.category}</p>
+          <p className={styles.p}>Sub-category: {posts.post.sub_category}</p>
           {Array.isArray(posts.responses) && posts.responses.length > 0 ? (
             <ul>
               {posts.responses.map((response) => (
                 <li key={response.response_id}>
-                  <img className={styles.img} src={response.response_img} />
+                  {response.response_img && (
+                    <img
+                      className={styles.img}
+                      src={response.response_img}
+                      alt="Response"
+                    />
+                  )}
                   <h3 className={styles.p}>{response.response_desc}</h3>
                   <button
                     className={styles.button}
@@ -93,15 +100,11 @@ const Chatroom = () => {
           ) : (
             <div>No response yet found</div>
           )}
-          <ChatroomResponse refreshPost={refreshPost}></ChatroomResponse>
-          <br />
-          <br />
-          <br />
-          <p className={styles.header2}>User List:</p>
-          <ChatRoomUserList post_id={post_id} />
+          <ChatroomResponse refreshPost={refreshPost} />
         </div>
       )}
       {error && <div>{error}</div>}
+      <ChatRoomUserList post_id={post_id} />
     </div>
   );
 };

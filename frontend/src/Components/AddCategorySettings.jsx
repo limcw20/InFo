@@ -40,9 +40,9 @@ const AddCategorySettings = (props) => {
   };
 
   return (
-    <div className={styles.gap}>
-      <form onSubmit={handleSubmit}>
-        <p className={styles.header3}>Add Category</p>
+    <div className={styles.list}>
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <p className={styles.header}>Add Category</p>
         <input
           className={styles.input}
           type="text"
@@ -50,7 +50,7 @@ const AddCategorySettings = (props) => {
           onChange={(e) => setCategory(e.target.value)}
           placeholder="Add category here"
         />
-        <p className={styles.header3}>Add Sub-Category</p>
+        <p className={styles.header}>Add Sub-Category</p>
         <input
           className={styles.input}
           type="text"
@@ -61,7 +61,7 @@ const AddCategorySettings = (props) => {
         <button className={styles.button} type="submit">
           Submit
         </button>
-        {error && <div>{error}</div>}
+        {error && <div className={styles.error}>{error}</div>}
       </form>
     </div>
   );

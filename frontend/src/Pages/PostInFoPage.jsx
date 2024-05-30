@@ -12,11 +12,11 @@ const PostInFoPage = () => {
   const [postTitle, setPostTitle] = useState("");
   const [postDesc, setPostDesc] = useState("");
   const [category, setCategory] = useState("");
-  const [sub_category, setSub_category] = useState("");
+  const [subCategory, setSubCategory] = useState("");
   const imageUploadRef = useRef(null);
   const [postImg, setPostImg] = useState("");
 
-  const CreateUserPost = async () => {
+  const createPost = async () => {
     try {
       setError("");
       const res = await fetchData(
@@ -26,13 +26,12 @@ const PostInFoPage = () => {
           post_title: postTitle,
           post_desc: postDesc,
           post_img: postImg,
-          category: category,
-          sub_category: sub_category,
+          category,
+          sub_category: subCategory,
         },
         userCtx.accessToken
       );
 
-      console.log(res);
       if (res.ok) {
         console.log("Post created successfully");
         navigate("/chat");
@@ -47,7 +46,7 @@ const PostInFoPage = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    CreateUserPost();
+    createPost();
   };
 
   useEffect(() => {
@@ -59,7 +58,7 @@ const PostInFoPage = () => {
         },
         (error, result) => {
           if (!error && result && result.event === "success") {
-            console.log("Image URL:", result.info.secure_url); // Debugging line
+            console.log("Image URL:", result.info.secure_url);
             setPostImg(result.info.secure_url);
           }
         }
@@ -112,13 +111,13 @@ const PostInFoPage = () => {
         <input
           className={styles.input}
           type="text"
-          value={sub_category}
-          onChange={(e) => setSub_category(e.target.value)}
-          placeholder="Type your sub_category here"
+          value={subCategory}
+          onChange={(e) => setSubCategory(e.target.value)}
+          placeholder="Type your sub-category here"
         />
 
         <p className={styles.p}>Image URL</p>
-        <input type="text" value={postImg} className={styles.input} />
+        <input type="text" value={postImg} className={styles.input} readOnly />
         <button
           type="button"
           id="upload_image_widget"
@@ -128,11 +127,11 @@ const PostInFoPage = () => {
         </button>
         <br />
         <button className={styles.submit_button} type="submit">
-          Post InFo
+          Post Info
         </button>
         <br />
         <br />
-        {error && <div className={styles.p}>{error}</div>}
+        {error && <div className={styles.error}>{error}</div>}
       </form>
     </div>
   );

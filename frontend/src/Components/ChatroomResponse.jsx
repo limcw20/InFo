@@ -11,7 +11,7 @@ const ChatroomResponse = (props) => {
   const [error, setError] = useState("");
   const { post_id } = useParams();
   const imageUploadRef = useRef(null);
-  const [responseImg, setResponseImg] = useState();
+  const [responseImg, setResponseImg] = useState("");
 
   const AddResponse = async () => {
     try {
@@ -20,13 +20,15 @@ const ChatroomResponse = (props) => {
       const res = await fetchData(
         `/responses/${userCtx.userId}/${post_id}`,
         "PUT",
-        { response_desc: responseDesc, response_img: responseImg }, // Store the imageURL in response_img
+        { response_desc: responseDesc, response_img: responseImg },
         userCtx.accessToken
       );
 
       if (res.ok) {
         console.log("Response added successfully");
         props.refreshPost();
+        setResponseDesc("");
+        setResponseImg("");
       } else {
         setError("Error adding response");
       }
@@ -67,34 +69,39 @@ const ChatroomResponse = (props) => {
   }, []);
 
   return (
-    <>
+    <div className={styles.responsesContainer}>
       <form onSubmit={handleSubmit}>
-        <input
-          className={styles.input}
-          type="text"
-          value={responseDesc}
-          onChange={(e) => setResponseDesc(e.target.value)}
-          placeholder="Type your response here"
-        />
-        <button className={styles.button} type="submit">
-          Submit
-        </button>
+        <div className={styles.formRow}>
+          <input
+            className={styles.input}
+            type="text"
+            value={responseDesc}
+            onChange={(e) => setResponseDesc(e.target.value)}
+            placeholder="Type your response here"
+          />
+          <button className={styles.button} type="submit">
+            Submit
+          </button>
+        </div>
+        <div className={styles.formRow}>
+          <input
+            className={styles.input}
+            type="text"
+            value={responseImg}
+            onChange={(e) => setResponseImg(e.target.value)}
+            placeholder="Image URL"
+          />
+          <button
+            type="button"
+            id="upload_image_widget"
+            className={`${styles.cloudinary_button} cloudinary-button`}
+          >
+            Upload Picture
+          </button>
+        </div>
         {error && <div>{error}</div>}
-        <input
-          label="image"
-          type="text"
-          value={responseImg}
-          onChange={(e) => setResponseImg(e.target.value)}
-        ></input>
-        <button
-          type="button"
-          id="upload_image_widget"
-          className={`${styles.cloudinary_button} cloudinary-button`}
-        >
-          Upload Picture
-        </button>
       </form>
-    </>
+    </div>
   );
 };
 

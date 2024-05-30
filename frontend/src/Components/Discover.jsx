@@ -75,10 +75,14 @@ const Discover = () => {
     <div className={styles.container}>
       <h1 className={styles.header}>Random Post:</h1>
       <img className={styles.img} src={posts.post_img} />
-      <h3 className={styles.header2}>{posts.post_title}</h3>
-      <p className={styles.p}>{posts.post_desc}</p>
-      <DiscoverPassButton handleClick={handleGetPost} />
-      <DiscoverJoinButton handleJoinClick={handleJoinPost} />
+      <div className={styles.textContainer}>
+        <h3 className={styles.header2}>{posts.post_title}</h3>
+        <p className={styles.p}>{posts.post_desc}</p>
+      </div>
+      <div className={styles.buttonContainer}>
+        <DiscoverPassButton handleClick={handleGetPost} />
+        <DiscoverJoinButton handleJoinClick={handleJoinPost} />
+      </div>
     </div>
   );
 };

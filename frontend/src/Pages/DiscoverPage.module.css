@@ -2,8 +2,7 @@
   display: grid;
   grid-template-columns: 250px auto;
   background-color: #829191;
-  grid-template-rows: 130vh;
+  grid-template-rows: 100vh;
   margin-left: 250px;
   justify-content: center;
-  margin-top: -130px;
 }

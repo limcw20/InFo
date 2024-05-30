@@ -22,7 +22,7 @@ const CategorySettings = () => {
       if (res.ok) {
         setCategories(res.data);
       } else {
-        setError("Error fetching categories");
+        setError("No Categories Found");
       }
     } catch (error) {
       setError("Error fetching categories");
@@ -61,15 +61,15 @@ const CategorySettings = () => {
   return (
     <>
       {categories.length > 0 ? (
-        <ul>
+        <ul className={styles.list}>
           {categories.map((userCategory) => (
-            <li key={userCategory.user_settings_id}>
-              <p className={styles.header2}>Category</p>
-              <p className={styles.p2}>{userCategory.category}</p>
-              <p className={styles.header2}>Sub-category</p>
-              <p className={styles.p2}>{userCategory.sub_category}</p>
+            <li key={userCategory.user_settings_id} className={styles.listItem}>
+              <p className={styles.header}>Category</p>
+              <p className={styles.p}>{userCategory.category}</p>
+              <p className={styles.header}>Sub-category</p>
+              <p className={styles.p}>{userCategory.sub_category}</p>
               <button
-                className={styles.button2}
+                className={styles.button}
                 onClick={() => handleDelete(userCategory.user_settings_id)}
               >
                 Delete
@@ -78,7 +78,9 @@ const CategorySettings = () => {
           ))}
         </ul>
       ) : (
-        <div>{error ? error : "No categories found"}</div>
+        <div className={styles.error}>
+          {error ? error : "No categories found"}
+        </div>
       )}
       <AddCategorySettings refreshCategories={refreshCategories} />
     </>
