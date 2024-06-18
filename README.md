@@ -60,8 +60,9 @@
 
 
 ###### Upon joining, users can respond to the post like an internet forum. They can only delete their own comments. As the host of the post, they can kick other users or even delete the entire post itself.
-![image](https://github.com/limcw20/InFo/assets/157563230/1a4fd1e2-b37c-4df7-9eac-f4c3c27ad909)
 ![image](https://github.com/limcw20/InFo/assets/157563230/0c1b3241-a221-4e17-99e5-59c7eb1a6b44)
+![image](https://github.com/limcw20/InFo/assets/157563230/1a4fd1e2-b37c-4df7-9eac-f4c3c27ad909)
+
 
 
 ###### Lastly, on the settings page, the user is able to edit basic information and add their top categories (for future features).
