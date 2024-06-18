@@ -1,4 +1,4 @@
-# InFo
+![image](https://github.com/limcw20/InFo/assets/157563230/b3b7ac5b-d957-4dce-8548-b3e56106df2e)# InFo
 ## Project Description
 #### A change of approach in internet forum where users matchmake into discussion rooms to actively discuss their interests.
 
@@ -40,30 +40,33 @@
 ### As of now, the app functions well as intended. However, a rework of the look will be implemented, along with some extra features.
 
 ##### Users will need to register before being able to access the contents of the app. Some basic information is needed when registering. However, users will only need their username and password to login.
-![image](https://github.com/limcw20/InFo/assets/157563230/d498aa4a-a949-4b59-ab51-3ebbd919f038)
-![image](https://github.com/limcw20/InFo/assets/157563230/1e6f97d7-eeea-4635-b329-628cb055cb7d)
-![image](https://github.com/limcw20/InFo/assets/157563230/f0f4275c-ea06-44a0-8dd4-c61a885e76e0)
+![image](https://github.com/limcw20/InFo/assets/157563230/62822546-7531-474a-9e88-966fcf1d07e7)
+![image](https://github.com/limcw20/InFo/assets/157563230/f53897d3-20cb-4764-9e6b-034ec027a01a)
+![image](https://github.com/limcw20/InFo/assets/157563230/d83eb6db-794f-4c7a-9308-f92f939b6e9e)
+
 
 
 ###### After login, the user will be directed to a list of chatroom the user is involved in. (Empty when account is just created as user has not participated in any)
-![image](https://github.com/limcw20/InFo/assets/157563230/59cf2196-5ed4-429d-9687-564f66e88dbe)
+![image](https://github.com/limcw20/InFo/assets/157563230/71aa9c56-2c31-4902-b443-47944d3c60f7)
+
 
 ###### On the Post InFo page, user will be able to initiate a discussion as such:
-![image](https://github.com/limcw20/InFo/assets/157563230/91d999c1-4fe1-4a4c-af9a-ba553bffa854)
+![image](https://github.com/limcw20/InFo/assets/157563230/8bae5207-7bad-4acf-a22e-202837b8214d)
+
 
 ###### The user can explore randomized posts initiated by others and decide whether to join in the discussion or not.
 
-![image](https://github.com/limcw20/InFo/assets/157563230/f5a54ae0-7628-4e60-b43e-fffc67168d28)
+![image](https://github.com/limcw20/InFo/assets/157563230/99988551-173a-402c-8824-9fd0aaaf2876)
 
-###### Upon joining, users can respond to the post like an internet forum. They can only delete their own comments.
-![image](https://github.com/limcw20/InFo/assets/157563230/ecb63059-71de-404b-8552-ad253c29c530)
 
-###### As the host of the post, they can kick other users or even delete the entire post itself.
-![image](https://github.com/limcw20/InFo/assets/157563230/ad8ba5e9-d842-4a5e-944d-1645afc7cc5c)
+###### Upon joining, users can respond to the post like an internet forum. They can only delete their own comments. As the host of the post, they can kick other users or even delete the entire post itself.
+![image](https://github.com/limcw20/InFo/assets/157563230/1a4fd1e2-b37c-4df7-9eac-f4c3c27ad909)
+![image](https://github.com/limcw20/InFo/assets/157563230/0c1b3241-a221-4e17-99e5-59c7eb1a6b44)
+
 
 ###### Lastly, on the settings page, the user is able to edit basic information and add their top categories (for future features).
-![image](https://github.com/limcw20/InFo/assets/157563230/25564527-c056-4e59-93b5-4011b6544901)
-![image](https://github.com/limcw20/InFo/assets/157563230/39da1f5e-3abd-40fe-ace9-2e4d89b052ee)
+![image](https://github.com/limcw20/InFo/assets/157563230/81b75f6b-f000-46cf-bf40-ee9c643f3752)
+
 
 
 
